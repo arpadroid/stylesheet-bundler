@@ -1,0 +1,5 @@
+button,
+select {
+    cursor: pointer;
+    color: var(--grey-700);
+}

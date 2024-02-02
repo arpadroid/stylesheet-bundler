@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My HTML5 Page</title>
+        <link rel="stylesheet" href="themes/default/default.compiled.css" />
+        <!-- <link rel="stylesheet" href="themes/dark/dark.compiled.css" /> -->
+    </head>
+    <body>
+        <header>
+            <h1>Arpadroid - Themes</h1>
+            <a href="https://github.com/arpadroid/themes" target="_blank"></a>
+        </header>
+        <main>
+            <p>
+                Arpadroid Themes package helps keeping your styles organized into different theme stylesheets,
+                providing high scalability, maintainability and performance, ultimately striving to boost CSS
+                development productivity and efficiency. It can be integrated to any build system, toolchain,
+                framework or application. Supports LESS and SCSS, as well as minification.
+            </p>
+            <p>Try it yourself!</p>
+            <section>
+                <details>
+                    <summary><h2>Configuration</h2></summary>
+                    <div class="summary-content">
+                        <p>
+                            Arpadroid Themes is basically a stylesheet compiler. It leverages ability to
+                            create multiple stylesheets, which are compiled from many different stylesheet
+                            sources across your application.
+                        </p>
+                        <p>Getting started is easy:</p>
+
+                        <ol>
+                            <li>
+                                <p>
+                                    The theme styles will be kept under a directory within your application source
+                                    code with a name and location of your own choosing. The name of this
+                                    directory will represent the theme stylesheet name e.g 'default',
+                                    'dark', 'light', etc...
+
+                                </p>
+                                <p>
+                                    It is required that you have a JSON theme configuration file in the root
+                                    of this directory. The naming convention is '[directoryName].config.json'
+                                    e.g 'default.config.json', 'dark.config.json', 'light.config.json', etc...
+                                </p>
+                                <p>
+                                    The configuration file should define the theme stylesheets inside the
+                                    includes array. The stylesheet includes are relative to the theme
+                                    directory and the extension should be omitted. e.g.
+                                    <pre>
+                                        <code>
+                                            {
+                                                "includes": [
+                                                    "vars/colors",
+                                                    "vars/easing",
+                                                    "vars/layout",
+                                                    "vars/screen",
+                                                    "vars/typography",
+                                                    "vars/animations",
+                                                    "vars/variables",
+                                                    "main/fonts",
+                                                    "main/main",
+                                                    "components/headings",
+                                                    "components/lists",
+                                                    "components/scrollbar",
+                                                    "components/summary",
+                                                    "components/link",
+                                                    "components/list"
+                                                ]
+                                            }
+                                        </code>
+                                    </pre>
+                                    
+                                </p>
+                                <p>
+                                    It is possible to have theme stylesheets outside the theme directory, which are compiled back to the output theme stylesheet, by convention these stylesheets will have a sub-extension matching the theme name e.g. 'buttonComponent.dark.css' continue reading to find all about it..
+                                </p>
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+                <details>
+                    <summary><h2>Using the Compiler</h2></summary>
+                    <div class="summary-content">
+                        <p>We must invoke the compiler within a nodeJS script, this can be done in your webpack file or invoked directly via CLI. :</p>
+                        <pre>
+
+                        </pre>
+                        
+                    </div>
+                </details>
+                <details>
+                    <summary><h2>Setting up Live reload</h2></summary>
+                    <div class="summary-content">Something small enough to escape casual notice.</div>
+                </details>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+summary {
+    
+}
+
+details {
+    padding: 20px;
+}
+
+summary h2 {
+    display: inline;
+    margin-left: 10px;
+    position: relative;
+}
+
+summary::-webkit-details-marker,
+summary::marker {
+    
+}
+
+.summary-content {
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid var(--color-border);
+}

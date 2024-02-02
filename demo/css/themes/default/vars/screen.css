@@ -1,0 +1,9 @@
+:root {
+    --screen-mini: 320px;
+    --screen-small: 480px;
+    --screen-medium: 768px;
+    --screen-large: 1024px;
+    --screen-xx: 1280px;
+    --screen-xxx: 1440px;
+    --screen-xxxx: 1920px;
+}

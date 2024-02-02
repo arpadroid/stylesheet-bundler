@@ -1,0 +1,25 @@
+:root {
+    --main-bg-color: brown;
+    --box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    --max-page-width: 1600px;
+    --striped-area: repeating-linear-gradient(
+        45deg,
+        var(--grey-50),
+        var(--grey-50) 10px,
+        var(--color-background) 10px,
+        var(--color-background) 20px
+    );
+    --striped-area-outline: 2px solid var(--grey-50);
+    --striped-area-border: 2px solid var(--color-background);
+    --select-combo-box-shadow: rgba(99, 99, 99, 0.5) 0px 2px 8px 0px;
+    --theme-transition: background-color 0.4s ease-out, color 0.4s ease-out, border 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.stripedArea {
+    background: var(--striped-area);
+    border: var(--striped-area-border);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    outline: var(--striped-area-outline);
+    padding: 16px;
+}

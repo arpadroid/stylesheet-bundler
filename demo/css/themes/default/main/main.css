@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+    padding: 16px;
+    margin: 0;
+    font-family: var(--font-primary);
+    color: var(--text-color);
+    background-color: var(--color-background);
+    transition: var(--theme-transition);
+}
+
+body {
+    overflow-y: scroll;
+}
+
+strong,
+.bold {
+    font-family: var(--font-family-avant-garde-md);
+    color: var(--grey-900);
+}
