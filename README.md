@@ -10,7 +10,7 @@ sources:
 </p>
 
 <details open>
-    <summary><h2>Features</h2></summary>
+    <summary>Features</summary>
     <div class="summary-content">
         <ol>
             <li>
@@ -34,50 +34,30 @@ sources:
     </div>
 </details>
 <details>
-    <summary><h2>Theme Configuration</h2></summary>
+    <summary>Theme Configuration</summary>
     <div class="summary-content">
         <ol>
             <li>
                 <p>
                     The main theme styles will be kept under a directory within your application source code with a name and location of your own choosing. The name of this directory will represent the theme name e.g 'default', 'dark', 'light', etc...
-
                 </p>
                 <p>
                     A JSON configuration file is required in the root of this directory, the naming convention is '[directoryName].config.json'
                     e.g 'default/default.config.json', 'dark/dark.config.json', 'light/light.config.json', etc...
                 </p>
                 <p>
-
                     At minimum, the configuration file should define the theme stylesheets through the includes property.
                     The stylesheet includes are relative to the theme directory and the extension should be omitted. e.g:
-                    <pre>
-                        <code>
-
-{
-"includes": [
-"vars/colors",
-"vars/layout",
-"vars/variables",
-"main",
-"components/headings",
-"components/lists",
-"..."
-]
-}
-</code>
-</pre>
-</p>
-<p>
-For all other documentation on the configuration options please refer to the
-<a href="https://github.com/arpadroid/themes/blob/main/src/themeCompilerInterface.d.ts">
-themeCompilerInterface
-</a>.  
- </p>
-
+                </p>
+                <p>
+                    For all other documentation on the configuration options please refer to the
+                    <a href="https://github.com/arpadroid/themes/blob/main/src/themeCompilerInterface.d.ts">
+                    themeCompilerInterface
+                    </a>.  
+                </p>
             </li>
         </ol>
     </div>
-
 </details>
 <details>
     <summary><h2>Using the Compiler</h2></summary>
@@ -98,7 +78,6 @@ themeCompilerInterface
     <div class="summary-content">Something small enough to escape casual notice.</div>
 </details>
 
+<!-- # https://chromewebstore.google.com/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei
 
-# https://chromewebstore.google.com/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei
-
-# https://stackoverflow.com/questions/51126403/you-dont-have-write-permissions-for-the-library-ruby-gems-2-3-0-directory-ma
+# https://stackoverflow.com/questions/51126403/you-dont-have-write-permissions-for-the-library-ruby-gems-2-3-0-directory-ma -->
