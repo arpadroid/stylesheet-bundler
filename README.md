@@ -5,7 +5,7 @@
     <br/><br/>
 </p>
 
-<details open>
+<details>
     <summary><h2>Features<h2></summary>
     <div class="summary-content">
         <ol>
@@ -33,7 +33,7 @@
         </ol>
     </div>
 </details>
-<details>
+<details openn>
     <summary><h2>Theme Configuration</h2></summary>
     <div class="summary-content">
         <ol>
@@ -41,19 +41,38 @@
                 <p>
                     The main theme styles will be kept under a directory within your application source code with a name and location of your own choosing. The name of this directory will represent the theme name e.g 'default', 'dark', 'light', etc...
                 </p>
+            </li>
+            <li>
                 <p>
                     A JSON configuration file is required in the root of this directory, the naming convention is '[directoryName].config.json'
                     e.g 'default/default.config.json', 'dark/dark.config.json', 'light/light.config.json', etc...
                 </p>
+            </li>
+            <li>
                 <p>
                     At minimum, the configuration file should define the theme stylesheets through the includes property.
                     The stylesheet includes are relative to the theme directory and the extension should be omitted. e.g:
+                    <pre>
+                        <code>
+{
+    "includes": [
+        "vars/colors",
+        "vars/layout",
+        "vars/variables",
+        "main",
+        "components/headings",
+        "components/lists",
+        "..."
+    ]
+}
+                    </code>
+                </pre>
                 </p>
+            </li>
+            <li>
                 <p>
-                    For all other documentation on the configuration options please refer to the
-                    <a href="https://github.com/arpadroid/themes/blob/main/src/themeCompilerInterface.d.ts">
-                    themeCompilerInterface
-                    </a>.  
+                For all other documentation on the configuration options please refer to the ThemeCompilerInterface
+                https://github.com/arpadroid/themes/blob/main/src/themeCompilerInterface.d.ts
                 </p>
             </li>
         </ol>
