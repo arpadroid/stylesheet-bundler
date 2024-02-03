@@ -52,21 +52,10 @@
                 <p>
                     At minimum, the configuration file should define the theme stylesheets through the includes property.
                     The stylesheet includes are relative to the theme directory and the extension should be omitted. e.g:
-                    <pre>
-                        <code>
-{
-    "includes": [
-        "vars/colors",
-        "vars/layout",
-        "vars/variables",
-        "main",
-        "components/headings",
-        "components/lists",
-        "..."
-    ]
-}
-                    </code>
-                </pre>
+                    https://github.com/arpadroid/themes/blob/15d3474def3478c36a24081c3762ce636bb23745/demo/css/themes/default/default.config.json#L1-L19
+                </p>
+                <p>
+                Note: If you ask yourself why are we not using CSS @imports for this within our styles, there is a simple reason: @import creates an HTTP request every time. If we have many stylesheets in our theme this can create a bottleneck and slow loading.
                 </p>
             </li>
             <li>
@@ -79,17 +68,28 @@
     </div>
 </details>
 <details>
-    <summary><h2>Using the Compiler</h2></summary>
+    <summary><h2>Using the Themes Compiler</h2></summary>
     <div class="summary-content">
-        <p>We must invoke the compiler within a nodeJS script, this can be done in your webpack file or invoked directly via CLI :
-        Refer to the <a href="https://github.com/arpadroid/themes/blob/main/demo/css/compile.js">compile.js</a> file in this demo for an example of how to invoke the compiler.
-    </p>
-        <p>
-            It is possible to have theme stylesheets outside the theme directory, which are compiled back to the output theme stylesheet. By convention these stylesheets will have a sub-extension matching the theme name e.g. 'buttonComponent.dark.css'.
-            In order to do this, please lookup the documentation of the patterns property in <a href="https://github.com/arpadroid/themes/blob/main/src/themesCompilerInterface.d.ts">
-                themesCompilerInterface
-            </a>
-        </p>
+        <ol>
+            <li>
+                <p>
+                    We must invoke the compiler within a nodeJS script, this can be done in your webpack file or invoked directly via CLI.
+                    Here is a documented demo implementation, feel free to copy and repurpose it for you own needs:
+                    https://github.com/arpadroid/themes/blob/15d3474def3478c36a24081c3762ce636bb23745/demo/css/compile.js#L1-L48
+                </p>
+            </li>
+            <li>
+                <p>
+                    It is possible to have theme stylesheets outside the theme directory, which are compiled back to the output theme stylesheet. By convention these stylesheets will have a sub-extension matching the theme name e.g. 'buttonComponent.dark.css'.
+                </p>
+            </li>
+            <li>
+                <p>
+                    For more information about the ThemesCompieler options check out ThemesCompilerInerface :
+                    https://github.com/arpadroid/themes/blob/15d3474def3478c36a24081c3762ce636bb23745/src/themesCompilerInterface.d.ts#L1-L38
+                </p>
+            </li>
+        </ol>
     </div>
 </details>
 <details>
