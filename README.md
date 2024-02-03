@@ -72,7 +72,7 @@
             <li>
                 <p>
                 For all other documentation on the configuration options please refer to the ThemeCompilerInterface
-                https://github.com/arpadroid/themes/blob/main/src/themeCompilerInterface.d.ts
+                https://github.com/arpadroid/themes/blob/5f9aa3ce9c6d04439eb6d04bfa1f6b59cf33ff45/src/themeCompilerInterface.d.ts#L1
                 </p>
             </li>
         </ol>
