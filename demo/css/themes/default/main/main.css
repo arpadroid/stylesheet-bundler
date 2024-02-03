@@ -11,6 +11,8 @@ html {
     color: var(--text-color);
     background-color: var(--color-background);
     transition: var(--theme-transition);
+    font-size: 1.1rem;
+    line-height: 1.6rem;
 }
 
 body {
@@ -19,6 +21,6 @@ body {
 
 strong,
 .bold {
-    font-family: var(--font-family-avant-garde-md);
+    font-weight: 600;
     color: var(--grey-900);
 }

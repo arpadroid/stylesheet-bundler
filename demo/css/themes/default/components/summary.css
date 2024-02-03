@@ -1,5 +1,5 @@
 summary {
-    
+    cursor: pointer;
 }
 
 details {
@@ -14,7 +14,7 @@ summary h2 {
 
 summary::-webkit-details-marker,
 summary::marker {
-    
+    color: var(--color-primary);
 }
 
 .summary-content {

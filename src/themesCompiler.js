@@ -9,6 +9,12 @@ const ThemeCompiler = require('./themeCompiler');
 const cwd = process.cwd();
 
 class ThemesCompiler {
+    /** @type {ThemeCompilerInterface[]} themes */
+    themes = [];
+
+    /** @type {Record<string, ThemeCompilerInterface>} themesByName */
+    themesByName = {};
+
     /** @type {ThemeCompiler} commonTheme */
     commonTheme;
 
@@ -17,12 +23,6 @@ class ThemesCompiler {
 
     /** @type {Promise<Response>} */
     promise;
-
-    /** @type {ThemeCompilerInterface[]} themes */
-    themes = [];
-
-    /** @type {Record<string, ThemeCompilerInterface>} themes */
-    themesByName = {};
 
     /**
      * This class compiles and watches CSS/LESS/SCSS themes.
@@ -167,6 +167,16 @@ class ThemesCompiler {
                 }
             }
         });
+    }
+
+    /**
+     * Cleans up all compiled theme files.
+     */
+    cleanup() {
+        if (this.commonTheme) {
+            this.commonTheme.cleanup();
+        }
+        this.themes.forEach(theme => theme.cleanup());
     }
 }
 

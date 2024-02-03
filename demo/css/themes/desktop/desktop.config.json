@@ -1,3 +1,4 @@
 {
+    "extension": "scss",
     "includes": ["desktop"]
 }

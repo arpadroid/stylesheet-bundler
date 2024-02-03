@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable security/detect-non-literal-fs-filename */
 /**
  * @typedef {import('./themeCompilerInterface').ThemeCompilerInterface} ThemeCompilerInterface
@@ -18,9 +19,6 @@ class ThemeCompiler {
     /** @type {string} themeName */
     themeName;
 
-    /** @type {string} configFile */
-    configFile;
-
     /** @type {'css' | 'less' | 'scss'} extension */
     extension;
 
@@ -33,7 +31,7 @@ class ThemeCompiler {
      */
     constructor(config) {
         this.setConfig(config);
-        this._initializeProperties();
+        this.promise = this._initialize();
     }
 
     /**
@@ -52,19 +50,29 @@ class ThemeCompiler {
     getDefaultConfig() {
         return {
             extension: 'css',
-            patterns: []
+            patterns: [],
+            includes: [],
+            verbose: true
         };
     }
 
     /**
-     * Initializes the main properties.
+     * Returns the path to the config file.
+     * @returns {string}
      */
-    _initializeProperties() {
+    getConfigFile() {
+        return PATH.normalize(`${this.path}/${this.themeName}.config.json`);
+    }
+
+    /**
+     * Initializes the theme, this method should be called externally.
+     */
+    async _initialize() {
         this.setPath(this._config.path);
         this.themeName = this.path.split(PATH.sep).pop();
+        this._fileConfig = await this._loadFileConfig();
+        Object.assign(this._config, this._fileConfig || {});
         this.extension = this._config.extension;
-        this.configFile = this.getConfigFile();
-        this.promise = this.initialize();
     }
 
     /**
@@ -74,34 +82,21 @@ class ThemeCompiler {
      */
     setPath(path = cwd) {
         if (typeof path !== 'string' || !fs.lstatSync(path).isDirectory()) {
-            throw new Error('INVALID PATH:' + path);
+            console.log(`ThemeCompiler => Invalid path in theme config ${this.themeName}: "${path}"`);
         }
         this.path = path;
     }
 
-    /**
-     * Returns the path to the config file.
-     * @returns {string}
-     */
-    getConfigFile() {
-        return this._config?.configFile ?? PATH.normalize(`${this.path}/${this.themeName}.config.json`);
-    }
-
-    /**
-     * Initializes the theme, this method should be called externally.
-     */
-    async initialize() {
-        this.fileConfig = await this.loadThemeConfig();
-    }
-
-    async loadThemeConfig() {
-        if (this.configFile && !fs.existsSync(this.configFile)) {
-            console.log(`CONFIG FILE NOT FOUND FOR ${this.themeName}: ` + this.configFile);
+    async _loadFileConfig() {
+        const configFile = this.getConfigFile();
+        if (configFile && !fs.existsSync(configFile)) {
+            console.log(
+                `ThemeCompiler => Config file not found for theme '${this.themeName}': ` + configFile
+            );
             return Promise.resolve({});
         }
-        const rawData = await fs.readFileSync(this.configFile);
-        this.fileConfig = JSON.parse(rawData);
-        return Promise.resolve(this.fileConfig);
+        const payload = await fs.readFileSync(configFile);
+        return Promise.resolve(JSON.parse(payload));
     }
 
     /**
@@ -126,33 +121,44 @@ class ThemeCompiler {
      * @returns {Promise<Response>}
      */
     async compile(minify = false) {
+        const { verbose } = this._config;
+
         if (this.timeout) {
             // DEBOUNCING
+            if (verbose) {
+                console.log('ThemeCompiler =>', 'Debouncing theme compile: ', this.themeName);
+            }
             return;
         }
+        if (verbose) {
+            console.info('ThemeCompiler =>', 'Compiling theme:', this.themeName);
+        }
         this.debounce();
-        const compiled = this.mergeFiles();
-        if (!compiled?.length) {
-            console.log('NO CSS FOUND IN THEME: ' + this.themeName);
+        const compiledStyles = this.mergeFiles();
+        if (!compiledStyles?.length) {
+            console.log('ThemeCompiler =>', 'no css found in file: ', this.themeName);
             return Promise.resolve();
         }
-        if (this.extension === 'less') {
-            await this.putLess();
-        } else if (this.extension === 'scss') {
-            await this.putSass();
-        }
         const targetFile = this.getTargetFile();
-        return this.writeFile(targetFile, compiled)
-            .then(async response => {
-                if (MODE === 'production' || minify === true) {
-                    await this.minify(compiled, this.getMinifiedTargetFile());
-                }
-                return Promise.resolve(response);
-            })
-            .catch(response => {
-                response.message = `COULD NOT WRITE TO FILE: ${targetFile}`;
-                return Promise.reject(response);
-            });
+        const rv = await fs.writeFileSync(targetFile, compiledStyles);
+        let styles = compiledStyles;
+        let minifiedTargetFile = this.getMinifiedTargetFile();
+        if (this.extension === 'less') {
+            const targetCSS = targetFile.replace('.less', '.css');
+            await this.lessToCss(targetFile, targetCSS);
+            styles = fs.readFileSync(targetCSS, 'utf8');
+            minifiedTargetFile = minifiedTargetFile.replace('.less', '.css');
+        } else if (this.extension === 'scss') {
+            const targetCSS = targetFile.replace('.scss', '.css');
+            await this.scssToCss(targetFile, targetCSS);
+            styles = fs.readFileSync(targetCSS, 'utf8');
+            minifiedTargetFile = minifiedTargetFile.replace('.scss', '.css');
+        }
+        if (MODE === 'production' || minify === true) {
+            await this.minify(styles, minifiedTargetFile);
+        }
+
+        return rv;
     }
 
     /**
@@ -204,7 +210,7 @@ class ThemeCompiler {
         }
         const file = this._config.commonThemeFile;
         if (fs.existsSync(file) && !fs.lstatSync(file).isFile()) {
-            console.log(`COMMON THEME FILE DOES NOT EXIST ${file}.`);
+            console.log(`ThemeCompiler => common theme file does not exist ${file}.`);
             return undefined;
         }
         return file;
@@ -215,7 +221,7 @@ class ThemeCompiler {
      * @returns {string[]}
      */
     getIncludes() {
-        return (this.fileConfig?.includes ?? []).map(include =>
+        return (this._fileConfig?.includes ?? []).map(include =>
             PATH.join(this.path, `${include}.${this.extension}`)
         );
     }
@@ -242,14 +248,6 @@ class ThemeCompiler {
     }
 
     /**
-     * Converts less to css and outputs to file.
-     * @todo Implement method.
-     */
-    putLess() {
-        // return this.lessToCss(this.themeFile, this.cssFile);
-    }
-
-    /**
      * Converts less to css.
      * @param {string} lessFile
      * @param {string} cssFile
@@ -262,12 +260,15 @@ class ThemeCompiler {
     }
 
     /**
-     * Converts scss to css and outputs to file.
-     * @returns {Promise<Response>}
-     * @todo Implement method.
+     * Converts scss to css.
+     * @param {string} scssFile
+     * @param {string} cssFile
+     * @returns {string}
      */
-    putSass() {
-        return Promise.resolve();
+    scssToCss(scssFile, cssFile) {
+        const path = PATH.normalize('node_modules/node-sass/bin/node-sass');
+        const cmd = `node ${path} ${scssFile} ${cssFile}`;
+        return execSync(cmd).toString();
     }
 
     /**
@@ -329,22 +330,6 @@ class ThemeCompiler {
     }
 
     /**
-     * Writes the CSS file.
-     * @param {string} file
-     * @param {string} content
-     * @returns {Promise<Response>}
-     */
-    async writeFile(file, content) {
-        return fs.writeFile(file, content, err => {
-            if (err) {
-                console.error('ERROR', err);
-                return Promise.reject(err);
-            }
-            return Promise.resolve({});
-        });
-    }
-
-    /**
      * Minifies the CSS and writes it to a file.
      * @param {string} css
      * @param {string} destination
@@ -352,7 +337,7 @@ class ThemeCompiler {
      */
     async minify(css, destination) {
         const minified = await minify(css);
-        return await this.writeFile(destination, minified.css);
+        return await fs.writeFileSync(destination, minified.css);
     }
 
     /**
@@ -368,6 +353,27 @@ class ThemeCompiler {
                         callback(file, event);
                     }
                 });
+            }
+        });
+    }
+
+    /**
+     * Cleans up the compiled and minified files.
+     */
+    cleanup() {
+        const compiledFile = `${this.themeName}.compiled.${this.extension}`;
+        const minifiedFile = `${this.themeName}.min.css`;
+        const files = [compiledFile, minifiedFile];
+        if (this.extension !== 'css') {
+            files.push(`${this.themeName}.compiled.css`);
+        }
+
+        console.log('files', files);
+        files.forEach(file => {
+            const filePath = PATH.normalize(`${this.path}/${file}`);
+            console.log('filePath', filePath);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
             }
         });
     }
