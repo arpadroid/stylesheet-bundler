@@ -1,8 +1,4 @@
-# themes
-
-Arpadroid Themes package helps keeping your styles organized into different theme stylesheets, providing high scalability, maintainability and performance, ultimately striving to boost CSS development productivity and efficiency. It can be integrated to any build system, toolchain, framework or application. Supports LESS and SCSS, as well as minification.
-
-sources:
+# Themes
 
 <p>
     Arpadroid Themes package helps keeping your styles organized into different theme stylesheets. Aiming to deliver scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, it is a stylesheet compiler that leverages the ability to create multiple stylesheets, which are compiled from different stylesheet sources across your application. 
@@ -10,7 +6,7 @@ sources:
 </p>
 
 <details open>
-    <summary>Features</summary>
+    <summary><h2>Features<h2></summary>
     <div class="summary-content">
         <ol>
             <li>
@@ -34,7 +30,7 @@ sources:
     </div>
 </details>
 <details>
-    <summary>Theme Configuration</summary>
+    <summary><h2>Theme Configuration</h2></summary>
     <div class="summary-content">
         <ol>
             <li>
