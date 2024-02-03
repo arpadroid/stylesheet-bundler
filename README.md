@@ -16,15 +16,19 @@
                 Imagine you wanted to switch between a light and dark theme, or have a theme for different user roles, or even a theme for different application states, this is all easy with Arpadroid Themes.
                 <br/><br/>
                 <strong>Why?:</strong> Instead of having to create a class name for each state and introduce more specificity into your stylesheet, you can simply leverage the cascade by toggling a stylesheet when needed; this helps create a more maintainable, scalable and performant CSS architecture.  
+                <br/><br/>
             </li>
             <li>
                 Supports LESS and SCSS, minifies your CSS in production mode, and automatically re-compiles your stylesheets when changes are made during development. 
+                <br/><br/>
             </li>
             <li>
                 It's lightweight and integrates seamlessly with live reload, increasing CSS developer experience and productivity.
+                <br/><br/>
             </li>
             <li>
                 Use it alongside any build system, toolchain, framework or application.
+                <br/><br/>
             </li>
         </ol>
     </div>
