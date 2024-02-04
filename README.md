@@ -97,7 +97,7 @@
         <li>
             <p>
                 Copy the `Guardfile` used in this repo and drop it at the root of your project, modify as needed.
-                https://github.com/arpadroid/themes/blob/d78be3cd7b6cedf905906173cbf9eafffe0899a0/Guardfile
+                https://github.com/arpadroid/themes/blob/d78be3cd7b6cedf905906173cbf9eafffe0899a0/Guardfile#L1-L57
             </p>
         </li>
         <li>
