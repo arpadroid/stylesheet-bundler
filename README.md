@@ -132,7 +132,7 @@
     </ol>
 </section>
 <p>
-    One last note: there is a working demo included as part of this repo under demo/css/, don't forget to check it out and have a play with it. <br/> 
-    I'll be adding some nice examples as to how this package can be leveraged.<br/> 
+    <strong>One last note:</strong> there is a <a href="https://github.com/arpadroid/themes/tree/main/demo/css">working demo</a> included as part of this repo, don't forget to check it out and have a play with it. <br/> I have adding some practical examples as to how this package can be leveraged, and I'll be adding more with time.<br/> 
+    <br/>
     Remember that for live reload to work properly the page must be running in a server on your localhost.
 </p>
