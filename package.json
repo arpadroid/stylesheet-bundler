@@ -1,5 +1,5 @@
 {
-    "name": "arpanoid-themes",
+    "name": "arpadroid-themes",
     "version": "1.0.0",
     "description": "Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Themes package helps compiling stylesheets across your application into different stylesheets or themes.",
     "scripts": {

@@ -1,3 +1,3 @@
-const ArpanoidThemes = require('arpanoid-themes');
-console.log('ArpanoidThemes ', ArpanoidThemes );
+const ArpadroidThemes = require('arpadroid-themes');
+console.log('arpadroidThemes ', ArpadroidThemes );
 /** @todo Write test. */
