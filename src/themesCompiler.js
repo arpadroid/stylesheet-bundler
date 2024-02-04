@@ -49,7 +49,6 @@ class ThemesCompiler {
     getDefaultConfig() {
         return {
             themes: [],
-            extension: 'css',
             minify: false,
             patterns: []
         };
@@ -82,11 +81,10 @@ class ThemesCompiler {
      * Instantiates ThemeCompiler for the common theme defined through commonThemeFile in the config.
      */
     _initializeCommonTheme() {
-        const { extension, patterns, commonThemePath } = this._config;
+        const { patterns, commonThemePath } = this._config;
         if (fs.existsSync(commonThemePath)) {
             this.commonTheme = new ThemeCompiler({
                 path: commonThemePath,
-                extension,
                 patterns
             });
         }
@@ -102,7 +100,7 @@ class ThemesCompiler {
             const themeName = this.commonTheme.getName();
             const path = this.commonTheme.getPath();
             config.commonThemeFile = PATH.normalize(
-                `${path}/${themeName}.compiled.${this._config.extension}`
+                `${path}/${themeName}.compiled.css`
             );
         }
     }
@@ -158,9 +156,10 @@ class ThemesCompiler {
         }
         fs.watch(path, { recursive: true }, async (event, file) => {
             if (file) {
-                const extension = PATH.extname(file);
-                if (extension === `.${this._config.extension}`) {
-                    const theme = this.themesByName[file.split('.')[1]];
+                const ext = PATH.extname(file).slice(1);
+                if (['less', 'scss', 'css'].includes(ext)) {
+                    const themeName = file.split('.')[1];
+                    const theme = this.themesByName[themeName];
                     if (theme) {
                         theme.compile(this._config.minify);
                     }

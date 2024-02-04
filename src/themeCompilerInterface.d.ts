@@ -3,47 +3,62 @@
  */
 export interface ThemeCompilerInterface {
     /**
-     * The path to the theme directory containing all stylesheets.
-     * It is required when passing it to the ThemesCompiler config.
+     * @property {string} path - The absolute path to the theme directory containing all stylesheets.
+     * It is NOT required via the file config [themeName].config.json.
+     * It is the only required property when creating an instance of the ThemesCompiler and defining the themes array.
+     * Check it out in the the sample script demo/css/compile.js.
      */
     path?: string;
+
     /**
-     * An array of stylesheet paths to be included in the compilation process. The paths are relative to the theme directory and should not include the file extension.
+     * @property {string[]} includes - An array of stylesheet paths to be included in the compilation process.
+     * The paths to the stylesheets are relative to the theme directory and should not include the file extension.
      * e.g. 'main', 'variables/colors', 'variables/sizes' etc...
      */
     includes?: string[];
+
     /**
-     * A set of absolute glob file patterns to be used when looking for theme files in other directories. Note these external files need a sub-extension of .<themeName>.<extension> to be recognized as theme files e.g. 'my-stylesheet.default.css, my-stylesheet.dark.css'.
-     */
-    patterns?: string[];
-    /**
-     * The common theme file is a file that is prepended at the start of the theme file.
-     * The value is inherited and received from the ThemesCompiler configuration.
-     */
-    commonThemeFile?: string;
-    /**
-     * The configuration file for the theme config.
-     * It is required to have a config file for any theme, if the path is not specified in the configuration, then the script will look for a file following this pattern: '<themes_path>/<theme_name>/<theme_name>.config.json'
-     */
-    configFile?: string;
-    /**
-     * The extension of the theme files.
-     * Can be either 'css', 'less', or 'scss'.
+     * @property {'css' | 'less' | 'scss'} extension - The extension of the theme files, the default is 'css'.
+     * Note: the ThemesCompiler will allow you to have different themes with different extensions.
+     * You have the possibility to have a theme with a .less extension and another with a .scss extension.
      */
     extension?: 'css' | 'less' | 'scss';
+
     /**
-     * Specifies the full path and exact filename of the output minified theme file after compilation.
-     * If not specified, the script will output the styles to a file following this pattern: '<themes_path>/<theme_name>/<theme_name>.min.<extension>'
+     * @property {string} commonThemeFile - A path to a common stylesheet that will be used as a base for the current theme.
+     * It is internally set by the ThemesCompiler if we set a commonThemePath (refer to ThemesCompilerInterface).
      */
-    minifiedTarget?: string;
-    
+    commonThemeFile?: string;
+
     /**
-     * Specifies the full path and exact filename of the output theme file after compilation.
-     * If not specified, the script will output the styles to a file following this pattern: '<themes_path>/<theme_name>/<theme_name>.compiled.<extension>'
+     * @property {string} configFile - An absolute path to the configuration file for the theme config.
+     * It is required to have a config file for any theme. I
+     * If the configFile is not specified in the configuration, then the script will look for a file following this pattern:
+     * '[themesPath]/[themeName]/[themeName].config.json' e.g. 'src/themes/default/default.config.json'
+     */
+    configFile?: string;
+
+    /**
+     * @property {string} target - Specifies the full path and exact filename of the output theme file after compilation.
+     * The contents of this file are not minified and should be used in development mode.
+     * If not specified, the script will output the styles to a file following this pattern: '/../[themeName]/[themeName].compiled.css'
      */
     target?: string;
+
     /**
-     * If set to true logs the output of the compilation process.
+     * @property {string} minifiedTarget - Specifies the full path and exact filename of the minified theme file.
+     * If not specified, the script will output the styles to a file following this pattern: '/../[themeName]/[themeName].min.css'
+     */
+    minifiedTarget?: string;
+
+    /**
+     * @property {string[]} patterns - A set of absolute glob file patterns to be used when looking for theme files in other directories.
+     * It is passed via the ThemesCompiler config. Refer to ThemesCompilerInterface patterns property for more information.
+     */
+    patterns?: string[];
+
+    /**
+     * @property {boolean} verbose - If set to true it logs the output of the compilation process.
      */
     verbose?: boolean;
 }

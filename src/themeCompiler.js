@@ -52,7 +52,7 @@ class ThemeCompiler {
             extension: 'css',
             patterns: [],
             includes: [],
-            verbose: true
+            verbose: false
         };
     }
 
@@ -134,6 +134,7 @@ class ThemeCompiler {
             console.info('ThemeCompiler =>', 'Compiling theme:', this.themeName);
         }
         this.debounce();
+
         const compiledStyles = this.mergeFiles();
         if (!compiledStyles?.length) {
             console.log('ThemeCompiler =>', 'no css found in file: ', this.themeName);
@@ -233,12 +234,15 @@ class ThemeCompiler {
      */
     getCSS(file) {
         let css = '';
-        if (file.endsWith(`.compiled.${this.extension}`)) {
+        if (file !== this._config.commonThemeFile && file.endsWith(`.compiled.${this.extension}`)) {
             return css;
         }
         const fileContent = fs.readFileSync(file, 'utf8');
         if (!fileContent || !fileContent.length) {
-            return console.error('no CSS found in file:' + file);
+            if (this._config.verbose) {
+                console.log('no CSS found in file:' + file);
+            }
+            return;
         }
         if (MODE === 'development') {
             css += `\r\n/*\r\n File: ${file}  \r\n*/\r\n`;
@@ -367,11 +371,8 @@ class ThemeCompiler {
         if (this.extension !== 'css') {
             files.push(`${this.themeName}.compiled.css`);
         }
-
-        console.log('files', files);
         files.forEach(file => {
             const filePath = PATH.normalize(`${this.path}/${file}`);
-            console.log('filePath', filePath);
             if (fs.existsSync(filePath)) {
                 fs.unlinkSync(filePath);
             }
