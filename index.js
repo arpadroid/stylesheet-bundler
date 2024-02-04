@@ -1,4 +1,4 @@
-import ThemesCompiler from './src/themesCompiler.js';
+const ThemesCompiler = require('./src/themesCompiler.js');
 
 module.exports = {
     ThemesCompiler
