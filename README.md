@@ -59,7 +59,7 @@
             </p>
             <p>
                 For all other documentation on the theme configuration options please refer to the `ThemeCompilerInterface`
-                https://github.com/arpadroid/themes/blob/788e73b99cd5c96ef0dab47878af5e618864b10f/src/themeCompilerInterface.d.ts#L1-L49
+                https://github.com/arpadroid/themes/blob/2e7cd0570e16c0c12fe178163c633a2198c403c7/src/themeCompilerInterface.d.ts#L1-L64
             </p>
         </li>
     </ol>
@@ -69,7 +69,7 @@
     <p>
         We must invoke the themes compiler at build time within a nodeJS script, this can be done in your webpack file, via a script in your package.json or directly via CLI.
         Here is a documented demo implementation of the ThemesCompiler, feel free to copy and repurpose it for you own needs:
-        https://github.com/arpadroid/themes/blob/15d3474def3478c36a24081c3762ce636bb23745/demo/css/compile.js#L1-L48
+        https://github.com/arpadroid/themes/blob/2e7cd0570e16c0c12fe178163c633a2198c403c7/demo/css/compile.js#L1-L37
     </p>
     <p>
         Once we run the script above all themes will be compiled into their respective stylesheets.
@@ -82,7 +82,7 @@
     </p>
     <p>
         For detailed information about the ThemesCompiler options check out the `ThemesCompilerInterface`:
-        https://github.com/arpadroid/themes/blob/15d3474def3478c36a24081c3762ce636bb23745/src/themesCompilerInterface.d.ts#L1-L38
+        https://github.com/arpadroid/themes/blob/2e7cd0570e16c0c12fe178163c633a2198c403c7/src/themesCompilerInterface.d.ts#L1-L44
     </p>
 </section>
 <section>
