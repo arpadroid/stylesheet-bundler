@@ -1,9 +1,10 @@
-# Themes
+# Arpadroid Themes
+
 <p>
     Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Themes package helps compiling stylesheets across your application into different stylesheets or themes.
 </p>
 <section>
-    <h3>Features</h3>
+    <h2>Features</h2>
     <ol>
         <li>
             Easily compile one or multiple theme stylesheets from sources across your application's source code. 
@@ -32,7 +33,7 @@
     </ol>
 </section>
 <section>
-    <h3>Theme Configuration and Setup</h3>
+    <h2>Theme Configuration and Setup</h2>
     <ol>
         <li>
             <p>
@@ -65,7 +66,7 @@
     </ol>
 </section>
 <section>
-    <h3>Using the Themes Compiler</h3>
+    <h2>Using the Themes Compiler</h2>
     <p>
         We must invoke the themes compiler at build time within a nodeJS script, this can be done in your webpack file, via a script in your package.json or directly via CLI.
         Here is a documented demo implementation of the ThemesCompiler, feel free to copy and repurpose it for you own needs:
@@ -86,7 +87,7 @@
     </p>
 </section>
 <section>
-    <h3>Setting up Live reload</h3>
+    <h2>Setting up Live reload</h2>
     <ol>
         <li>
             <p>
@@ -130,3 +131,8 @@
         </li>
     </ol>
 </section>
+<p>
+    One last note: there is a working demo included as part of this repo under demo/css/, don't forget to check it out and have a play with it. <br/> 
+    I'll be adding some nice examples as to how this package can be leveraged.<br/> 
+    Remember that for live reload to work properly the page must be running in a server on your localhost.
+</p>
