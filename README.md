@@ -112,7 +112,7 @@
         </li>
         <li>
             <p>
-            Navigate to your project's local URL in your browser.
+            Navigate to your project's local URL in your browser.<br/>
             <strong>Note:</strong> Livereload will not work if you open an HTML file directly in your browser, you need a local server running e.g. `localhost:8080`
             </p>
         </li>
@@ -133,6 +133,4 @@
 </section>
 <p>
     <strong>One last note:</strong> there is a <a href="https://github.com/arpadroid/themes/tree/main/demo/css">working demo</a> included as part of this repo, don't forget to check it out and have a play with it. <br/> I have adding some practical examples as to how this package can be leveraged, and I'll be adding more with time.<br/> 
-    <br/>
-    Remember that for live reload to work properly the page must be running in a server on your localhost.
 </p>
