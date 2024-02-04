@@ -8,19 +8,24 @@ html {
     padding: 16px;
     margin: 0;
     font-family: var(--font-primary);
+    font-size: 1rem;
     color: var(--text-color);
-    background-color: var(--color-background);
     transition: var(--theme-transition);
-    font-size: 1.1rem;
     line-height: 1.6rem;
 }
 
 body {
+    background-color: var(--color-background);
     overflow-y: scroll;
+}
+
+.documentWrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 50px;
 }
 
 strong,
 .bold {
     font-weight: 600;
-    color: var(--grey-900);
 }

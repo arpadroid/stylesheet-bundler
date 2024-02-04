@@ -1,0 +1,15 @@
+.button {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    border: 2px solid var(--color-primary);
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 20px;
+    height: 48px;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

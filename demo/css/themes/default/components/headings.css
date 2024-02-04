@@ -5,4 +5,7 @@ h1 {
 h2 {
     color: var(--grey-700);
     width: auto;
+    font-size: 1.2rem;
+    padding: 8px 0px;
+    position: relative;
 }

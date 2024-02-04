@@ -1,9 +1,11 @@
 summary {
     cursor: pointer;
+    padding: 12px 0px;
 }
 
-details {
-    padding: 20px;
+summary:hover h2,
+details[open] summary h2 {
+    text-decoration: underline;
 }
 
 summary h2 {
@@ -23,4 +25,13 @@ summary::marker {
     flex-direction: column;
     padding: 20px;
     border-bottom: 1px solid var(--color-border);
+}
+
+details p {
+    margin: 0;
+    padding: 12px 28px;
+}
+
+details blockquote {
+    margin-left: 20px;
 }
