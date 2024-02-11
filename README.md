@@ -1,13 +1,12 @@
 # Arpadroid Themes
-
 <p>
     Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Themes package helps bundling stylesheets across your application into different stylesheets or themes.
 </p>
 
 <section>
-    <h2>To be or not to be: the reason behind this package.</h2>
+    <h2><i>To be, or not to be:</i> the reason behind this package.</h2>
     <p>
-        I built this package to solve a problem that became quite frustrating as every application I stumbled upon suffered of it: the impossibility to get live reload working properly during CSS/SCSS/LESS development in different Angular/React applications which used different versions of Webpack 4 and 5. What I mean by **live reload** is that when you save a stylesheet, the style change will reflect instantly in your browser and **without any loss of state**. I have to emphasize the last part because it is specially helpful when dealing with the nowadays ubiquitous Single Page Application. It means the following: say you were styling a modal which takes three clicks to get to; Saving a style and seeing it reflected in the browser should not have you go through those three clicks again, and you should ideally see the change happen instantly and without having to refresh the browser. This is very important, at least if you want to boost CSS developer productivity, reduce developer frustration, and increase developer experience. Actually it's an incredible productivity booster.
+        I built this package to solve a problem that became quite frustrating as every application I stumbled upon suffered of it: the impossibility to get live reload working properly during CSS/SCSS/LESS development in different Angular/React applications which used different versions of Webpack 4 and 5. What I mean by <b>live reload</b> is that when you save a stylesheet, the style change will reflect instantly in your browser and <b>without any loss of state</b>. I have to emphasize the last part because it is specially helpful when dealing with the nowadays ubiquitous Single Page Application. It means the following: say you were styling a modal which takes three clicks to get to; Saving a style and seeing it reflected in the browser should not have you go through those three clicks again, and you should ideally see the change happen instantly and without having to refresh the browser. This is very important, at least if you want to boost CSS developer productivity, reduce developer frustration, and increase developer experience. Actually it's an incredible productivity booster.
     </p>
     <p>
         Being frustrated with complex build tools and bundlers and configurations that didn't really work or do what I wanted, I decided to give a shot at bundling the stylesheets myself and this package is what I ended up coming up with.
@@ -26,43 +25,44 @@
         <li>
             <p>
             Easily bundle one or multiple theme stylesheets from sources across your application's source code. 
-            <br/><br/>
-            > [!TIP] 
-            > You can use multiple stylesheets in your application and toggle them interactively or based in application logic.<br/> 
-            > Imagine you wanted to switch between a light and dark theme, or have a theme for different user roles, or even a theme for different application states, this is all easy with Arpadroid Themes.<br/>
-            > **Why?:** Instead of having to create a class name for each state and introduce more specificity into your stylesheet, you can encapsulate your styles in different stylesheets and leverage the cascade by toggling them as required. This helps create a more maintainable, scalable and performant CSS architecture.
+            <br/>
             </p>
-        </li>
-        <li>
-            <p>
-                Supports LESS and SCSS, minifies your CSS in production mode, and automatically re-compiles your stylesheets when changes are made during development. 
-            </p>
-        </li>
-        <li>
-            <p>
-                It's lightweight and integrates seamlessly with live reload, increasing CSS developer experience and productivity.
-            </p>
-        </li>
-        <li>
-            <p>
-                Use it alongside any build system, toolchain, framework or application.
-            </p>
-        </li>
+
+> [!TIP] 
+> You can use multiple stylesheets in your application and toggle them interactively or based in application logic.<br/> 
+> Imagine you wanted to switch between a light and dark theme, or have a theme for different user roles, or even a theme for different application states, this is all easy with Arpadroid Themes.<br/>
+> <b>Why?:</b> Instead of having to create a class name for each state and introduce more specificity into your stylesheet, you can encapsulate your styles in different stylesheets and leverage the cascade by toggling them as required. This helps create a more maintainable, scalable and performant CSS architecture.
+
+</li>
+    <li>
+        <p>
+            Supports LESS and SCSS, minifies your CSS in production mode, and automatically re-compiles your stylesheets when changes are made during development. 
+        </p>
+    </li>
+    <li>
+        <p>
+            It's lightweight and integrates seamlessly with live reload, increasing CSS developer experience and productivity.
+        </p>
+    </li>
+    <li>
+        <p>
+            Use it alongside any build system, toolchain, framework or application.
+        </p>
+    </li>
     </ol>
 </section>
 <section>
     <h2>Theme Configuration and Setup</h2>
     <ol>
-        <li>To install the NPM package please run ```npm i arpadroid-themes```</li>
+        <li>To install the NPM package please run <b>npm i arpadroid-themes</b></li>
         <li>
             <p>
-                The main styles and CSS assets for each theme will be kept under a directory within your application source code with a name and location of your own choosing. The name of this directory will represent the name of the theme e.g **default**, **dark**, **light**, etc... You can have as many theme directories as you like, each will produce a single stylesheet.
+                The main styles and CSS assets for each theme will be kept under a directory within your application source code with a name and location of your own choosing. The name of this directory will represent the name of the theme e.g <b>default</b>, <b>dark</b>, <b>light</b>, etc... You can have as many theme directories as you like, each will produce a single stylesheet.
             </p>
         </li>
         <li>
             <p>
-                A JSON configuration file is required at the root of each theme directory, the naming convention is **[directoryName].config.json**
-                e.g **../themes/default/default.config.json**, **../themes/dark/dark.config.json**, **../themes/light/light.config.json**, etc...        
+                A JSON configuration file is required at the root of each theme directory, the naming convention is <b>[directoryName].config.json</b> e.g <b>../themes/default/default.config.json</b>, <b>../themes/dark/dark.config.json</b>, <b>../themes/light/light.config.json</b>, etc...        
             </p>
         </li>
         <li>
@@ -94,12 +94,12 @@
 }
 ```
 
+> [!TIP] 
+    > It's good to avoid the use of <b>@import</b> in your CSS altogether because it creates HTTP requests, which can greatly affect performance and scalability creating a bottleneck during the loading phase. It is best to define your imports as shown above and all files will be concatenated into a single file at the root of your theme directory. Therefore any assets referenced from any stylesheet, no matter where this file might be in your application, will be relative to the theme directory. This helps simplify development.
+    <br/>
 <p>
-    > [!TIP]  
-    > It's good to avoid the use of **@import** in your CSS altogether because it creates HTTP requests, which can greatly affect performance and scalability creating a bottleneck during the loading phase. It is best to define your imports as shown above and all files will be concatenated into a single file at the root of your theme directory. Therefore any assets referenced from any stylesheet, no matter where this file might be in your application, will be relative to the theme directory. This helps simplify development.
-</p>
-<p>
-    For all other documentation on the theme bundler configuration options please refer to the **ThemeBundlerInterface**
+<br/>
+    For all other documentation on the theme bundler configuration options please refer to the <b>ThemeBundlerInterface</b>
     
 ```ts
 export interface ThemeBundlerInterface {
@@ -167,7 +167,8 @@ export interface ThemeBundlerInterface {
 ```
 </p>
 <p>
-    > [!NOTE]
+
+> [!NOTE] 
     > Any properties defined in the theme's file configuration will take preference and override any other properties defined when we instantiate the ThemesBundler and define the themes, see usage below.
 </p>
         </li>
@@ -224,14 +225,14 @@ bundler.promise.then(() => {
 <p>
     Once we run the script above all themes will be bundled into their respective stylesheets.
     <br/>
-    For each theme, the bundler will create a file in its root directory called **[themeName].bundle.css** with the un-minified styles.
+    For each theme, the bundler will create a file in its root directory called <b>[themeName].bundle.css</b> with the un-minified styles.
     <br/>
-    If we are running the script in production mode a minified file will be created **[themeName].min.css** .
+    If we are running the script in production mode a minified file will be created <b>[themeName].min.css</b>.
     <br/>
     If you are running the script in development mode and edit a file that belongs to a theme, the theme will be re-bundled on save.
 </p>
 <p>
-    For detailed information about the **ThemesBundler** configuration check out the **ThemesBundlerInterface**
+    For detailed information about the <b>ThemesBundler</b> configuration check out the <b>ThemesBundlerInterface</b>
 
 ```ts
 export interface ThemesBundlerInterface {
@@ -287,12 +288,12 @@ export interface ThemesBundlerInterface {
         </li>
         <li>
             <p>
-                Copy the **Guardfile** used in this repo and drop it at the root of your project, modify as needed.
+                Copy the <b>Guardfile</b> used in this repo and drop it at the root of your project, modify as needed.
             </p>
         </li>
         <li>
             <p>
-                Using the CLI, go to the root of your project's source code (the same location where your **Guardfile** is), and run the command **guard**.
+                Using the CLI, go to the root of your project's source code (the same location where your <b>Guardfile</b> is), and run the command <b>guard</b>.
             </p>
         </li>
         <li>
@@ -302,20 +303,22 @@ export interface ThemesBundlerInterface {
         </li>
         <li>
             <p>
-            Navigate to your project's local URL in your browser.<br/>
-            > [!IMPORTANT]
-            > Livereload will not work if you open an HTML file directly in your browser, you need a local server running e.g. **localhost:8080**
+            Navigate to your project's local URL in your browser.
+            <br/>
+
+> [!IMPORTANT]
+> Livereload will not work if you open an HTML file directly in your browser, you need a local server running e.g. <b>localhost:8080</b>
             </p>
         </li>
         <li>
             <p>
                 Activate livereload extension in your browser.<br/>
-                Once you do this the CLI running the ```guard``` process should say **Browser Connected**.
+                Once you do this the CLI running the <b>guard</b> process should say <b>Browser Connected</b>.
             </p>
         </li>
         <li>
             <p>
-                **Enjoy CSS development!**
+                <b>Enjoy CSS development!</b>
                 <br/>
                 With all setup correctly, any time you save a change in a CSS file your browser should reflect the change instantly and without affecting the state of your page.
             </p>
@@ -327,7 +330,7 @@ export interface ThemesBundlerInterface {
     <ol>
         <li>
             <p>
-                In order to integrate the script with Webpack you'll need to invoke the **ThemesBundler** within the **webpack.config.js**
+                In order to integrate the script with Webpack you'll need to invoke the <b>ThemesBundler</b> within the <b>webpack.config.js</b>
 
 ```javascript
 const arpadroidThemes = require('arpadroid-themes');
@@ -363,7 +366,7 @@ module.exports = (async () => {
 </p>
         </li>
         <li>
-            <p>Finally you will have to export your bundled stylesheets and their corresponding assets. To do so, you can use the **CopyPlugin** in the webpack config like in the example below: </p>
+            <p>Finally you will have to export your bundled stylesheets and their corresponding assets. To do so, you can use the <b>copy-webpack-plugin</b> in the webpack config like in the example below: </p>
 
 ```javascript
 const CopyPlugin = require('copy-webpack-plugin');
@@ -404,5 +407,5 @@ plugins: [
 </p>
 
 <p>
-    **One last note:** there is a <a href="https://github.com/arpadroid/themes/tree/main/demo/css">working demo</a> included as part of this repo, which has more information and a few tricks. Don't forget to check it out, to do so open up **demo.html** in your browser and have a play with it. I have added some practical examples as to how this package can be leveraged, and I'll be adding more with time.<br/> 
+    <b>One last note:</b> there is a <a href="https://github.com/arpadroid/themes/tree/main/demo/css">working demo</a> included as part of this repo, which has more information and a few tricks. Don't forget to check it out, to do so open up <b>demo.html</b> in your browser and have a play with it. I have added some practical examples as to how this package can be leveraged, and I'll be adding more with time.<br/> 
 </p>
