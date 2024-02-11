@@ -1,5 +1,5 @@
-const ThemesCompiler = require('./src/themesCompiler.js');
+const ThemesBundler = require('./src/themesBundler.js');
 
 module.exports = {
-    ThemesCompiler
+    ThemesBundler
 };

@@ -1,29 +1,29 @@
-import { ThemeCompilerInterface } from './themeCompilerInterface';
+import { ThemeBundlerInterface } from './themeBundlerInterface';
 
 /**
- * Options and configuration for the ThemesCompiler.
+ * Options and configuration for the ThemesBundler.
  */
-export interface ThemesCompilerInterface {
+export interface ThemesBundlerInterface {
     /**
-     * @property {ThemeCompilerInterface[]} themes - An array of ThemeCompilerInterface configurations to define your themes.
-     * Check the implementation in demo/css/compile.js.
+     * @property {ThemeBundlerInterface[]} themes - An array of ThemeBundlerInterface configurations to define your themes.
+     * Check the implementation in demo/css/bundle.js.
      * It is only required to define a path property for each of them.
      * E.g. themes: [{ path: '/../src/themes/default' }, { path: '/../src/themes/dark' }]
      */
-    themes?: ThemeCompilerInterface[];
+    themes?: ThemeBundlerInterface[];
 
     /**
      * @property {string[]} patterns - A set of absolute glob file patterns to be used when looking for theme files in other directories.
      * Note these external files need to be named as follows to be recognized as theme files:
      * [filename].[themeName].[extension]  e.g. 'my-stylesheet.default.css, my-stylesheet.dark.css'.
-     * Check the implementation in demo/css/compile.js.
+     * Check the implementation in demo/css/bundle.js.
      * Those patterns are used to find the theme files in external directories.
      * They will pick up any files in any subdirectories as well so you are free to structure your code as you please.
      */
     patterns?: string[];
 
     /**
-     * @property {boolean} minify - Indicates whether the compiled themes should be minified. Default is false.
+     * @property {boolean} minify - Indicates whether the bundled themes should be minified. Default is false.
      */
     minify?: boolean;
 
@@ -32,7 +32,7 @@ export interface ThemesCompilerInterface {
      * It can be useful when you have scss/less mixins that are required as part of the compilation process of other themes.
      * If set the script will:
      *  1. Look for a theme config file in the specified directory
-     *  2. If found, it will compile the theme.
+     *  2. If found, it will bundle the theme.
      *  3. When compiling every other theme, it will prepend the common theme in each theme file.
      */
     commonThemePath?: string;

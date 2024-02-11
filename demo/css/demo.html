@@ -4,19 +4,19 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Arpadroid Themes</title>
-        <link rel="stylesheet" href="themes/default/default.compiled.css" />
-        <link id="dark-theme" disabled rel="stylesheet" href="themes/dark/dark.compiled.css" />
+        <link rel="stylesheet" href="themes/default/default.bundled.css" />
+        <link id="dark-theme" disabled rel="stylesheet" href="themes/dark/dark.bundled.css" />
         <link
             id="mobile-theme"
             rel="stylesheet"
             media="screen and (max-width: 700px)"
-            href="themes/mobile/mobile.compiled.css"
+            href="themes/mobile/mobile.bundled.css"
         />
         <link
             id="desktop-theme"
             rel="stylesheet"
             media="screen and (min-width: 701px)"
-            href="themes/desktop/desktop.compiled.css"
+            href="themes/desktop/desktop.bundled.css"
         />
 
         <script type="module" src="components/button/button.js"></script>
@@ -26,7 +26,6 @@
         <div class="documentWrapper">
             <header>
                 <h1>Arpadroid - Themes</h1>
-                <a href="https://github.com/arpadroid/themes" target="_blank"></a>
             </header>
             <main>
                 <p>
@@ -50,8 +49,8 @@
                             NPM then you don't need to do this.
                         </li>
                         <li>
-                            To get the compiler running you can go to the root of this project using the CLI and
-                            run the command <code>npm run compile:css:dev</code>.
+                            To get the bundler running in this demo you can go to the root of this project using the CLI and
+                            run the command <code>npm run bundle:css:dev</code>.
                             <br />
                             This should be watching your files and recompiling them on change.
                         </li>
@@ -99,9 +98,9 @@
                         In the following way, we can toggle the desktop/mobile themes whenever appropriate.
                         <br/>
                         <blockquote>
-                            &lt;link id="mobile-theme" rel="stylesheet" media="screen and (max-width: 700px)" href="themes/mobile/mobile.compiled.css" /&gt;
+                            &lt;link id="mobile-theme" rel="stylesheet" media="screen and (max-width: 700px)" href="themes/mobile/mobile.bundled.css" /&gt;
                             <br/>
-                            &lt;link id="desktop-theme" rel="stylesheet" media="screen and (min-width: 701px)" href="themes/desktop/desktop.compiled.css" /&gt;
+                            &lt;link id="desktop-theme" rel="stylesheet" media="screen and (min-width: 701px)" href="themes/desktop/desktop.bundled.css" /&gt;
                         </blockquote>
                     </p>
                     <p>

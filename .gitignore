@@ -1,6 +1,6 @@
 node_modules/
 .vscode/
-*.compiled.css
+*.bundled.css
 *.min.css
 *.scss
 *.less

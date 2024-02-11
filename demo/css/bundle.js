@@ -1,17 +1,17 @@
 /**
- * Sample usage of ThemesCompiler.
+ * Sample usage of ThemesBundler.
  * The script will act based upon the --mode passed, which can be either `development` or `production`.
  * You can have a script in your package.json that runs this file with the `--mode` flag.
- * E.g. `node ./scripts/compile.js --mode=production`.
- * @typedef {import('../../src/themeCompilerInterface').ThemeCompilerInterface} ThemeCompilerInterface
+ * E.g. `node ./scripts/bundle.js --mode=production`.
+ * @typedef {import('../../src/themeBundlerInterface').ThemeBundlerInterface} ThemeBundlerInterface
  */
-const ThemesCompiler = require('../../src/themesCompiler');
+const ThemesBundler = require('../../src/themesBundler');
 const argv = require('yargs').argv;
 const mode = argv.mode === 'production' ? 'production' : 'development';
 const cwd = process.cwd();
 const basePath = cwd + '/demo/css/themes';
-// We instantiate the themes compiler.
-const compiler = new ThemesCompiler({
+// We instantiate the themes bundler.
+const bundler = new ThemesBundler({
     themes: [
         { path: basePath + '/default' },
         { path: basePath + '/mobile' },
@@ -23,15 +23,15 @@ const compiler = new ThemesCompiler({
     commonThemePath: basePath + '/common'
 });
 
-// We wait until the compiler is ready.
-compiler.promise.then(() => {
+// We wait until the bundler is ready.
+bundler.promise.then(() => {
     // We clean up the output directory of each theme before compiling.
-    compiler.cleanup();
-    // We compile of all themes.
-    compiler.compile().then(() => {
+    bundler.cleanup();
+    // We bundle of all themes.
+    bundler.bundle().then(() => {
         if (mode === 'development') {
-            // We watch all files for changes and recompile the themes correspondingly.
-            compiler.watch();
+            // We watch all files for changes and re-bundle the themes correspondingly.
+            bundler.watch();
         }
     });
 });
