@@ -1,6 +1,6 @@
 {
     "name": "arpadroid-themes",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Themes package helps bundling stylesheets across your application into different stylesheets or themes.",
     "scripts": {
         "bundle:css:dev": "node ./demo/css/bundle.js",
