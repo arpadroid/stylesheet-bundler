@@ -1,14 +1,27 @@
 {
+    "author": "Andres Vaquero (@arpadroid) <web.andresvaquero@gmail.com> ",
     "name": "arpadroid-themes",
     "version": "2.0.0",
     "description": "Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Themes package helps bundling stylesheets across your application into different stylesheets or themes.",
+    "keywords": [
+        "Style sheet bundler",
+        "LESS bundler",
+        "SCSS bundler",
+        "LiveReload",
+        "CSS productivity",
+        "CSS themes"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/arpadroid/themes.git"
+    },
+    "homepage": "https://github.com/arpadroid/themes#readme",
     "scripts": {
         "bundle:css:dev": "node ./demo/css/bundle.js",
         "bundle:css:prod": "node ./demo/css/bundle.js --mode=production",
         "test": "node ./test/test.js"
     },
-    "author": "",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
         "@babel/plugin-syntax-import-assertions": "^7.23.3",
         "@babel/preset-env": "^7.23.9",

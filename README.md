@@ -4,6 +4,31 @@
 </p>
 
 <section>
+    <h2>Index</h2>
+    <nav>
+        <ul>
+        <li>
+            <a href="#arpadroid-themes-intro">Intro</a>
+        </li>
+        <li>
+            <a href="#arpadroid-themes-features">Features</a>
+        </li>
+        <li>
+            <a href="#arpadroid-themes-setup">Theme configuration and setup</a>
+        </li>
+        <li>
+            <a href="#arpadroid-themes-bundler">Using the ThemesBundler</a>
+        </li>
+        <li>
+            <a href="#arpadroid-themes-livereload">Setting up LiveReload</a>
+        </li>
+        <li>
+            <a href="#arpadroid-themes-webpack">Integration with Webpack</a>
+        </li>
+    </nav>
+</section>
+
+<section id="arpadroid-themes-intro">
     <h2><i>To be, or not to be:</i> the reason behind this package.</h2>
     <p>
         I built this package to solve a problem that became quite frustrating as every application I stumbled upon suffered of it: the impossibility to get live reload working properly during CSS/SCSS/LESS development in different Angular/React applications which used different versions of Webpack 4 and 5. What I mean by <b>live reload</b> is that when you save a stylesheet, the style change will reflect instantly in your browser and <b>without any loss of state</b>. I have to emphasize the last part because it is specially helpful when dealing with the nowadays ubiquitous Single Page Application. It means the following: say you were styling a modal which takes three clicks to get to; Saving a style and seeing it reflected in the browser should not have you go through those three clicks again, and you should ideally see the change happen instantly and without having to refresh the browser. This is very important, at least if you want to boost CSS developer productivity, reduce developer frustration, and increase developer experience. Actually it's an incredible productivity booster.
@@ -19,7 +44,8 @@
     </p>
 </section>
 
-<section>
+
+<section id="arpadroid-themes-features">
     <h2>Features</h2>
     <ol>
         <li>
@@ -28,7 +54,7 @@
             <br/>
             </p>
 
-> [!TIP] 
+> :information_source: 
 > You can use multiple stylesheets in your application and toggle them interactively or based in application logic.<br/> 
 > Imagine you wanted to switch between a light and dark theme, or have a theme for different user roles, or even a theme for different application states, this is all easy with Arpadroid Themes.<br/>
 > <b>Why?:</b> Instead of having to create a class name for each state and introduce more specificity into your stylesheet, you can encapsulate your styles in different stylesheets and leverage the cascade by toggling them as required. This helps create a more maintainable, scalable and performant CSS architecture.
@@ -51,7 +77,7 @@
     </li>
     </ol>
 </section>
-<section>
+<section id="arpadroid-themes-setup">
     <h2>Theme Configuration and Setup</h2>
     <ol>
         <li>To install the NPM package please run <b>npm i arpadroid-themes</b></li>
@@ -94,9 +120,7 @@
 }
 ```
 
-> [!TIP] 
-    > It's good to avoid the use of <b>@import</b> in your CSS altogether because it creates HTTP requests, which can greatly affect performance and scalability creating a bottleneck during the loading phase. It is best to define your imports as shown above and all files will be concatenated into a single file at the root of your theme directory. Therefore any assets referenced from any stylesheet, no matter where this file might be in your application, will be relative to the theme directory. This helps simplify development.
-    <br/>
+> :information_source: &nbsp;It's good to avoid the use of <b>@import</b> in your CSS altogether because it creates HTTP requests, which can greatly affect performance and scalability creating a bottleneck during the loading phase. It is best to define your imports as shown above and all files will be concatenated into a single file at the root of your theme directory. Therefore any assets referenced from any stylesheet, no matter where this file might be in your application, will be relative to the theme directory. This helps simplify development.<br/>
 <p>
 <br/>
     For all other documentation on the theme bundler configuration options please refer to the <b>ThemeBundlerInterface</b>
@@ -168,14 +192,14 @@ export interface ThemeBundlerInterface {
 </p>
 <p>
 
-> [!NOTE] 
-    > Any properties defined in the theme's file configuration will take preference and override any other properties defined when we instantiate the ThemesBundler and define the themes, see usage below.
+> :information_source: 
+Any properties defined in the theme's file configuration will take preference and override any other properties defined when we instantiate the ThemesBundler and define the themes, see usage below.
 </p>
         </li>
     </ol>
 </section>
-<section>
-    <h2>Using the Themes Bundler</h2>
+<section id="arpadroid-themes-bundler">
+    <h2>Using the ThemesBundler</h2>
     <p>
         We must invoke the themes bundler at build time within a nodeJS script, this can be done in your webpack file (if you are using Webpack), via a script in your package.json or directly via CLI.
         Here is a documented demo implementation of the ThemesBundler, feel free to copy and repurpose it for you own needs:
@@ -222,15 +246,14 @@ bundler.promise.then(() => {
 });
 ````
 
-<p>
-    Once we run the script above all themes will be bundled into their respective stylesheets.
+> :information_source: &nbsp; Once we run the script above all themes will be bundled into their respective stylesheets.
     <br/>
-    For each theme, the bundler will create a file in its root directory called <b>[themeName].bundle.css</b> with the un-minified styles.
+    - For each theme, the bundler will create a file in its root directory called <b>[themeName].bundle.css</b> with the un-minified styles.
     <br/>
-    If we are running the script in production mode a minified file will be created <b>[themeName].min.css</b>.
+    - If we are running the script in production mode a minified file will be created <b>[themeName].min.css</b>.
     <br/>
-    If you are running the script in development mode and edit a file that belongs to a theme, the theme will be re-bundled on save.
-</p>
+    - If you are running the script in development mode and edit a file that belongs to a theme, the theme will be re-bundled on save.
+
 <p>
     For detailed information about the <b>ThemesBundler</b> configuration check out the <b>ThemesBundlerInterface</b>
 
@@ -278,8 +301,8 @@ export interface ThemesBundlerInterface {
 
 </p>
 </section>
-<section>
-    <h2>Setting up Live reload</h2>
+<section id="arpadroid-themes-livereload">
+    <h2>Setting up LiveReload</h2>
     <ol>
         <li>
             <p>
@@ -306,7 +329,7 @@ export interface ThemesBundlerInterface {
             Navigate to your project's local URL in your browser.
             <br/>
 
-> [!IMPORTANT]
+> :warning:
 > Livereload will not work if you open an HTML file directly in your browser, you need a local server running e.g. <b>localhost:8080</b>
             </p>
         </li>
@@ -325,8 +348,8 @@ export interface ThemesBundlerInterface {
         </li>
     </ol>
 </section>
-<section>
-    <h2>Setting up Webpack</h2>
+<section id="arpadroid-themes-webpack">
+    <h2>Integration with Webpack</h2>
     <ol>
         <li>
             <p>
