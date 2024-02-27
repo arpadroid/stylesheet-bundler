@@ -430,5 +430,5 @@ plugins: [
 </p>
 
 <p>
-    <b>One last note:</b> there is a <a href="https://github.com/arpadroid/themes/tree/main/demo/css">working demo</a> included as part of this repo, which has more information and a few tricks. Don't forget to check it out, to do so open up <b>demo.html</b> in your browser and have a play with it. I have added some practical examples as to how this package can be leveraged, and I'll be adding more with time.<br/> 
+    <b>One last note:</b> there is a <a href="https://github.com/arpadroid/stylesheet-bundler/tree/main/demo/css">working demo</a> included as part of this repo, which has more information and a few tricks. Don't forget to check it out, to do so open up <b>demo.html</b> in your browser and have a play with it. I have added some practical examples as to how this package can be leveraged, and I'll be adding more with time.<br/> 
 </p>
