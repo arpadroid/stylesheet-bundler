@@ -1,6 +1,6 @@
-# Arpadroid Themes
+# Arpadroid Stylesheet Bundler
 <p>
-    Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Themes package helps bundling stylesheets across your application into different stylesheets or themes.
+    Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid's Stylesheet Bundler package helps bundling stylesheets across your application into different stylesheets or themes.
 </p>
 
 <section>
@@ -56,7 +56,7 @@
 
 > :information_source: 
 > You can use multiple stylesheets in your application and toggle them interactively or based in application logic.<br/> 
-> Imagine you wanted to switch between a light and dark theme, or have a theme for different user roles, or even a theme for different application states, this is all easy with Arpadroid Themes.<br/>
+> Imagine you wanted to switch between a light and dark theme, or have a theme for different user roles, or even a theme for different application states, this is all easy with Arpadroid's Stylesheet Bundler.<br/>
 > <b>Why?:</b> Instead of having to create a class name for each state and introduce more specificity into your stylesheet, you can encapsulate your styles in different stylesheets and leverage the cascade by toggling them as required. This helps create a more maintainable, scalable and performant CSS architecture.
 
 </li>

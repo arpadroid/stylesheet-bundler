@@ -1,8 +1,8 @@
 {
     "author": "Andres Vaquero (@arpadroid) <web.andresvaquero@gmail.com> ",
-    "name": "arpadroid-themes",
+    "name": "@arpadroid/stylesheet-bundler",
     "version": "2.0.1",
-    "description": "Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Themes package helps bundling stylesheets across your application into different stylesheets or themes.",
+    "description": "Aiming to deliver CSS scalability, maintainability and performance, and ultimately striving to boost CSS development experience, productivity and efficiency, Arpadroid Stylesheet Bundler package helps bundling stylesheets across your application into different stylesheets or themes.",
     "keywords": [
         "Style sheet bundler",
         "LESS bundler",
