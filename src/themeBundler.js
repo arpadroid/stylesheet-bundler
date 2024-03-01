@@ -10,7 +10,8 @@ const fs = require('fs');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
 const MODE = argv.mode === 'production' ? 'production' : 'development';
-const { minify } = require('csso');
+const sass = require('sass');
+const { transform } = require('lightningcss');
 
 class ThemeBundler {
     /** @type {string} path */
@@ -90,9 +91,7 @@ class ThemeBundler {
     async _loadFileConfig() {
         const configFile = this.getConfigFile();
         if (configFile && !fs.existsSync(configFile)) {
-            console.log(
-                `ThemeBundler => Config file not found for theme '${this.themeName}': ` + configFile
-            );
+            console.log(`ThemeBundler => Config file not found for theme '${this.themeName}': ` + configFile);
             return Promise.resolve({});
         }
         const payload = await fs.readFileSync(configFile);
@@ -156,7 +155,11 @@ class ThemeBundler {
             minifiedTargetFile = minifiedTargetFile.replace('.scss', '.css');
         }
         if (MODE === 'production' || minify === true) {
-            await this.minify(styles, minifiedTargetFile);
+            const {code} = transform({
+                code: Buffer.from(styles),
+                minify: true
+            });
+            fs.writeFileSync(minifiedTargetFile, code);
         }
 
         return rv;
@@ -270,8 +273,7 @@ class ThemeBundler {
      * @returns {string}
      */
     scssToCss(scssFile, cssFile) {
-        const path = PATH.normalize('node_modules/node-sass/bin/node-sass');
-        const cmd = `node ${path} ${scssFile} ${cssFile}`;
+        const cmd = `sass ${scssFile} ${cssFile}`;
         return execSync(cmd).toString();
     }
 
@@ -281,8 +283,7 @@ class ThemeBundler {
      */
     getTargetFile() {
         return (
-            this._config?.target ??
-            PATH.normalize(`${this.path}/${this.themeName}.bundled.${this.extension}`)
+            this._config?.target ?? PATH.normalize(`${this.path}/${this.themeName}.bundled.${this.extension}`)
         );
     }
 

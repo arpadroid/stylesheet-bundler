@@ -24,11 +24,13 @@
     "license": "MIT",
     "devDependencies": {
         "@babel/plugin-syntax-import-assertions": "^7.23.3",
-        "@babel/preset-env": "^7.23.9",
-        "csso": "^5.0.5",
+        "@babel/preset-env": "^7.23.9"
+    },
+    "dependencies": {
         "glob": "^10.3.10",
         "less": "^4.2.0",
-        "node-sass": "^9.0.0",
+        "lightningcss": "^1.24.0",
+        "sass": "^1.71.1",
         "yargs": "^17.7.2"
     }
 }
