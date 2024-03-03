@@ -135,37 +135,6 @@ class ThemesBundler {
             this.commonTheme.watch(() => this.bundleThemes());
         }
         this.themes.forEach(theme => theme.watch());
-        this.watchPaths();
-    }
-
-    /**
-     * Watches all paths in config.watchPaths for changes.
-     */
-    watchPaths() {
-        const watchPaths = this._config.watchPaths ?? [`${cwd}/`];
-        watchPaths.forEach(path => this.watchPath(path));
-    }
-
-    /**
-     * Watches a configured path in config.watchPaths for changes, then re-bundles the theme.
-     * @param {string} path
-     */
-    watchPath(path) {
-        if (!path || !fs.existsSync(path)) {
-            return;
-        }
-        fs.watch(path, { recursive: true }, async (event, file) => {
-            if (file) {
-                const ext = PATH.extname(file).slice(1);
-                if (['less', 'scss', 'css'].includes(ext)) {
-                    const themeName = file.split('.')[1];
-                    const theme = this.themesByName[themeName];
-                    if (theme) {
-                        theme.bundle(this._config.minify);
-                    }
-                }
-            }
-        });
     }
 
     /**

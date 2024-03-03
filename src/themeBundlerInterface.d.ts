@@ -25,6 +25,11 @@ export interface ThemeBundlerInterface {
     extension?: 'css' | 'less' | 'scss';
 
     /**
+     * @property {string} baseTheme - The name of the base theme to be used as a base for the current theme, its contents will be prepended to the current theme file.
+     */
+    baseTheme?: string;
+
+    /**
      * @property {string} commonThemeFile - A path to a common stylesheet that will be used as a base for the current theme.
      * It is internally set by the ThemesBundler if we set a commonThemePath (refer to ThemesBundlerInterface).
      */
