@@ -7,6 +7,8 @@ const PATH = require('path');
 const fs = require('fs');
 const ThemeBundler = require('./themeBundler');
 const cwd = process.cwd();
+const argv = require('yargs').argv;
+const MODE = argv.mode === 'production' ? 'production' : 'development';
 
 class ThemesBundler {
     /** @type {ThemeBundlerInterface[]} themes */
@@ -99,9 +101,19 @@ class ThemesBundler {
         if (this.commonTheme) {
             const themeName = this.commonTheme.getName();
             const path = this.commonTheme.getPath();
-            config.commonThemeFile = PATH.normalize(
-                `${path}/${themeName}.bundled.css`
-            );
+            config.commonThemeFile = PATH.normalize(`${path}/${themeName}.bundled.css`);
+        }
+    }
+
+    /**
+     * Initializes the Themes Bundler.
+     */
+    async initialize() {
+        await this.promise;
+        this.cleanup();
+        await this.bundle();
+        if (MODE === 'development') {
+            this.watch();
         }
     }
 
