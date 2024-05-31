@@ -6,10 +6,9 @@
 const PATH = require('path');
 const fs = require('fs');
 const ThemeBundler = require('./themeBundler');
-const cwd = process.cwd();
 const argv = require('yargs').argv;
 const MODE = argv.mode === 'production' ? 'production' : 'development';
-
+const WATCH = require('yargs').argv.watch;
 class ThemesBundler {
     /** @type {ThemeBundlerInterface[]} themes */
     themes = [];
@@ -107,12 +106,13 @@ class ThemesBundler {
 
     /**
      * Initializes the Themes Bundler.
+     * @param {boolean} watch
      */
-    async initialize() {
+    async initialize(watch = WATCH || MODE === 'development') {
         await this.promise;
         this.cleanup();
         await this.bundle();
-        if (MODE === 'development') {
+        if (watch) {
             this.watch();
         }
     }

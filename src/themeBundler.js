@@ -10,7 +10,7 @@ const fs = require('fs');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
 const MODE = argv.mode === 'production' ? 'production' : 'development';
-const sass = require('sass');
+// const sass = require('sass');
 const { transform } = require('lightningcss');
 
 class ThemeBundler {
@@ -82,6 +82,7 @@ class ThemeBundler {
 
     /**
      * Sets the base theme.
+     * @param {string} baseTheme - The path to the base theme.
      */
     setBaseTheme(baseTheme) {
         const baseThemePath = PATH.resolve(baseTheme);
@@ -348,6 +349,7 @@ class ThemeBundler {
 
     /**
      * Returns the file patterns defined in the theme config.
+     * @param {boolean} addExtension
      * @returns {string[]}
      */
     getPatterns(addExtension = true) {
@@ -357,6 +359,7 @@ class ThemeBundler {
     /**
      * Appends the theme name sub-extension and file extension to a pattern.
      * @param {string} pattern
+     * @param {boolean} addExtension
      * @returns {string}
      */
     applyPattern(pattern, addExtension = true) {
@@ -364,8 +367,8 @@ class ThemeBundler {
             pattern = pattern.replace('{cwd}', cwd);
         }
         if (pattern.indexOf('../') === 0) {
-            const p = `${this.path}/${pattern}`;
-            pattern = PATH.resolve(p);
+            const path = `${this.path}/${pattern}`;
+            pattern = PATH.resolve(path);
         }
         if (addExtension) {
             pattern += `.${this.themeName}.${this.extension}`;
@@ -374,19 +377,9 @@ class ThemeBundler {
     }
 
     /**
-     * Minifies the CSS and writes it to a file.
-     * @param {string} css
-     * @param {string} destination
-     * @returns {Promise<Response>}
-     */
-    async minify(css, destination) {
-        const minified = await minify(css);
-        return await fs.writeFileSync(destination, minified.css);
-    }
-
-    /**
      * Watches the theme files for changes.
      * @param {(file: string, event:Event) => void} callback
+     * @param {boolean} bundle
      */
     async watch(callback, bundle = true) {
         if (this.baseTheme) {
@@ -423,23 +416,24 @@ class ThemeBundler {
      */
     watchPatterns(bundle = true, callback) {
         const patterns = this.getPatterns(false);
-        if (Array.isArray(patterns)) {
-            patterns.forEach(pattern => {
-                const path = pattern.replace(`/**/*`, '');
-                fs.watch(path, { recursive: true }, async (event, file) => {
-                    const ext = PATH.extname(file).slice(1);
-                    const subExt = PATH.basename(file).split('.')[1];
-                    if (this.extension === ext && subExt === this.themeName) {
-                        if (bundle) {
-                            await this.bundle();
-                        }
-                        if (typeof callback === 'function') {
-                            callback(file, event);
-                        }
-                    }
-                });
-            });
+        if (!Array.isArray(patterns)) {
+            return;
         }
+        patterns.forEach(pattern => {
+            const path = pattern.replace('/**/*', '');
+            fs.watch(path, { recursive: true }, async (event, file) => {
+                const ext = PATH.extname(file).slice(1);
+                const subExt = PATH.basename(file).split('.')[1];
+                if (this.extension === ext && subExt === this.themeName) {
+                    if (bundle) {
+                        await this.bundle();
+                    }
+                    if (typeof callback === 'function') {
+                        callback(file, event);
+                    }
+                }
+            });
+        });
     }
 
     /**
