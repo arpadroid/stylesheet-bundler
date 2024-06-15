@@ -51,7 +51,8 @@ class ThemesBundler {
         return {
             themes: [],
             minify: false,
-            patterns: []
+            patterns: [],
+            exportPath: '',
         };
     }
 
@@ -97,6 +98,7 @@ class ThemesBundler {
      */
     _initializeThemeConfig(config = {}) {
         config.patterns = this._config.patterns ?? config.patterns;
+        config.exportPath = this._config.exportPath ?? config.exportPath;
         if (this.commonTheme) {
             const themeName = this.commonTheme.getName();
             const path = this.commonTheme.getPath();

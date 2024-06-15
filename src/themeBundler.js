@@ -10,6 +10,7 @@ const fs = require('fs');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
 const MODE = argv.mode === 'production' ? 'production' : 'development';
+const VERBOSE = argv.verbose;
 // const sass = require('sass');
 const { transform } = require('lightningcss');
 
@@ -53,7 +54,7 @@ class ThemeBundler {
             extension: 'css',
             patterns: [],
             includes: [],
-            verbose: false
+            verbose: VERBOSE
         };
     }
 
@@ -180,7 +181,49 @@ class ThemeBundler {
             fs.writeFileSync(minifiedTargetFile, code);
         }
 
+        await this.exportBundle();
         return rv;
+    }
+
+    /**
+     * Exports the bundled theme.
+     * Will create a directory with the theme name in the export path if it doesn't exist and save the minified bundle file and the fonts directory.
+     */
+    async exportBundle() {
+        
+        const exportPath = this._config.exportPath;
+        if (!exportPath) {
+            return;
+        }
+        const exportDir = PATH.normalize(`${exportPath}/${this.themeName}`);
+        if (!fs.existsSync(exportDir)) {
+            fs.mkdirSync(exportDir, { recursive: true });
+        }
+
+        const targetFile = this.getTargetFile();
+        fs.copyFileSync(targetFile, PATH.normalize(`${exportDir}/${this.themeName}.bundled.css`));
+
+        const minifiedTargetFile = this.getMinifiedTargetFile();
+        fs.copyFileSync(minifiedTargetFile, PATH.normalize(`${exportDir}/${this.themeName}.min.css`));
+
+        const fontsDIR = PATH.normalize(`${this.path}/fonts`);
+        const fontsExportDIR = PATH.normalize(`${exportDir}/fonts`);
+        this.exportDir(fontsDIR, fontsExportDIR);
+
+        const imagesDIR = PATH.normalize(`${this.path}/images`);
+        const imagesExportDIR = PATH.normalize(`${exportDir}/images`);
+        this.exportDir(imagesDIR, imagesExportDIR);
+    }
+    
+    async exportDir(origin, destination) {
+        if (fs.existsSync(origin)) {
+            if (!fs.existsSync(destination)) {
+                fs.mkdirSync(destination, { recursive: true });
+            }
+            fs.readdirSync(origin).forEach(file => {
+                fs.copyFileSync(`${origin}/${file}`, `${destination}/${file}`);
+            });
+        }
     }
 
     /**
@@ -190,7 +233,7 @@ class ThemeBundler {
         this.timeout = setTimeout(() => {
             clearTimeout(this.timeout);
             this.timeout = null;
-        }, 50);
+        }, 100);
     }
 
     /**
