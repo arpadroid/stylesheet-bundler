@@ -143,67 +143,51 @@ class ThemeBundler {
         const { verbose } = this._config;
         if (this.timeout) {
             // DEBOUNCING
-            if (verbose) {
-                console.log('ThemeBundler =>', 'Debouncing theme bundle: ', this.themeName);
-            }
+            verbose && console.log('ThemeBundler =>', 'Debouncing theme bundle: ', this.themeName);
             return;
         }
-        if (verbose) {
-            console.info('ThemeBundler =>', 'Compiling theme:', this.themeName);
-        }
+        verbose && console.info('Compiling CSS theme:', this.themeName);
         this.debounce();
-        const bundledStyles = await this.mergeFiles();
-        if (!bundledStyles?.length) {
-            console.log('ThemeBundler =>', 'no css found in file: ', this.themeName);
-            return Promise.resolve();
-        }
-        const targetFile = this.getTargetFile();
-        const rv = await fs.writeFileSync(targetFile, bundledStyles);
-        if (this._config.slim) {
-            await this.writeStyles(true);
-        }
-        let styles = bundledStyles;
+        const { styles, targetFile, result } = await this.writeStyles();
+        let css = styles;
         let minifiedTargetFile = this.getMinifiedTargetFile();
         if (this.extension === 'less') {
             const targetCSS = targetFile.replace('.less', '.css');
             await this.lessToCss(targetFile, targetCSS);
-            styles = fs.readFileSync(targetCSS, 'utf8');
+            css = fs.readFileSync(targetCSS, 'utf8');
             minifiedTargetFile = minifiedTargetFile.replace('.less', '.css');
         } else if (this.extension === 'scss') {
             const targetCSS = targetFile.replace('.scss', '.css');
             await this.scssToCss(targetFile, targetCSS);
-            styles = fs.readFileSync(targetCSS, 'utf8');
+            css = fs.readFileSync(targetCSS, 'utf8');
             minifiedTargetFile = minifiedTargetFile.replace('.scss', '.css');
         }
         if (MODE === 'production' || minify === true) {
-            const { code } = transform({
-                code: Buffer.from(styles),
-                minify: true
-            });
+            const { code } = transform({ code: Buffer.from(css), minify: true });
             fs.writeFileSync(minifiedTargetFile, code);
-            if (this._config.slim) {
-                const slimMinifiedTargetFile = this.getMinifiedTargetFile(true);
-                fs.writeFileSync(slimMinifiedTargetFile, code);
-            }
         }
-
         await this.exportBundle();
-        return rv;
+        return result;
     }
 
-    async writeStyles(slim = false) {
-        const bundledStyles = await this.mergeFiles(slim);
-        if (!bundledStyles?.length) {
-            console.log('ThemeBundler =>', 'no css found in file: ', this.themeName);
-            return Promise.resolve();
+    async writeStyles() {
+        const styles = await this.mergeFiles();
+        if (!styles?.length) {
+            const message = `- No css found in file: ${this.themeName}`;
+            if (VERBOSE) {
+                console.log(message, this.themeName);
+            }
+            return Promise.resolve({ message, styles });
         }
-        const targetFile = this.getTargetFile(slim);
-        return await fs.writeFileSync(targetFile, bundledStyles);
+        const targetFile = this.getTargetFile();
+        const result = await fs.writeFileSync(targetFile, styles);
+        return { result, styles, targetFile };
     }
 
     /**
      * Exports the bundled theme.
      * Will create a directory with the theme name in the export path if it doesn't exist and save the minified bundle file and the fonts directory.
+     * @returns {Promise<boolean>}
      */
     async exportBundle() {
         const exportPath = this._config.exportPath;
@@ -219,33 +203,16 @@ class ThemeBundler {
         fs.copyFileSync(targetFile, PATH.normalize(`${exportDir}/${this.themeName}.bundled.css`));
 
         const minifiedTargetFile = this.getMinifiedTargetFile();
-        fs.copyFileSync(minifiedTargetFile, PATH.normalize(`${exportDir}/${this.themeName}.min.css`));
-
-        const slim = this._config.slim;
-        if (slim) {
-            const slimTargetFile = this.getTargetFile(true);
-            if (fs.existsSync(slimTargetFile)) {
-                fs.copyFileSync(
-                    slimTargetFile,
-                    PATH.normalize(`${exportDir}/${this.themeName}_slim.bundled.css`)
-                );
-            }
-            const slimMinifiedTargetFile = this.getMinifiedTargetFile(true);
-            if (fs.existsSync(slimMinifiedTargetFile)) {
-                fs.copyFileSync(
-                    slimMinifiedTargetFile,
-                    PATH.normalize(`${exportDir}/${this.themeName}_slim.min.css`)
-                );
-            }
+        if (fs.existsSync(minifiedTargetFile)) {
+            fs.copyFileSync(minifiedTargetFile, PATH.normalize(`${exportDir}/${this.themeName}.min.css`));
         }
-
         const fontsDIR = PATH.normalize(`${this.path}/fonts`);
         const fontsExportDIR = PATH.normalize(`${exportDir}/fonts`);
         this.exportDir(fontsDIR, fontsExportDIR);
 
         const imagesDIR = PATH.normalize(`${this.path}/images`);
         const imagesExportDIR = PATH.normalize(`${exportDir}/images`);
-        this.exportDir(imagesDIR, imagesExportDIR);
+        return this.exportDir(imagesDIR, imagesExportDIR);
     }
 
     async exportDir(origin, destination) {
@@ -257,6 +224,7 @@ class ThemeBundler {
                 fs.copyFileSync(`${origin}/${file}`, `${destination}/${file}`);
             });
         }
+        return true;
     }
 
     /**
@@ -271,13 +239,12 @@ class ThemeBundler {
 
     /**
      * Merges all the theme files contents into a single string.
-     * @param {boolean} slim
      * @returns {string}
      */
-    async mergeFiles(slim = false) {
+    async mergeFiles() {
         this.css = '';
         this.files = this.getFiles();
-        if (!slim && this.baseTheme) {
+        if (this.baseTheme) {
             this.css += await this.getBaseTheme();
         }
         this.files.forEach(file => {
@@ -386,13 +353,11 @@ class ThemeBundler {
 
     /**
      * Returns the target file where the un-minified styles will be saved.
-     * @param {boolean} slim
      * @returns {string}
      */
-    getTargetFile(slim = false) {
+    getTargetFile() {
         return (
-            this._config?.target ??
-            PATH.normalize(`${this.path}/${this.themeName}${slim ? '_slim' : ''}.bundled.${this.extension}`)
+            this._config?.target ?? PATH.normalize(`${this.path}/${this.themeName}.bundled.${this.extension}`)
         );
     }
 
@@ -521,12 +486,7 @@ class ThemeBundler {
     cleanup() {
         const name = this.themeName;
         const ext = this.extension;
-        const files = [
-            `${name}.bundled.${ext}`,
-            `${name}.min.css`,
-            `${name}_slim.bundled.${ext}`,
-            `${name}_slim.min.css`
-        ];
+        const files = [`${name}.bundled.${ext}`, `${name}.min.css`];
         if (this.extension !== 'css') {
             files.push(`${this.themeName}.bundled.css`);
         }
