@@ -200,7 +200,9 @@ class ThemeBundler {
         }
 
         const targetFile = this.getTargetFile();
-        fs.copyFileSync(targetFile, PATH.normalize(`${exportDir}/${this.themeName}.bundled.css`));
+
+        fs.existsSync(targetFile) &&
+            fs.copyFileSync(targetFile, PATH.normalize(`${exportDir}/${this.themeName}.bundled.css`));
 
         const minifiedTargetFile = this.getMinifiedTargetFile();
         if (fs.existsSync(minifiedTargetFile)) {
