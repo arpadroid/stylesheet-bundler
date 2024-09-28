@@ -41,7 +41,7 @@
     --color-primary: #2a8cef;
     --search-hilight: var(--color-yellow);
     --color-error-bg: var(--grey-150);
-    --color-error-outline: var(--color-light-red);
+    --color-error-outline: var(--red-light);
     --color-icon-active: var(--grey-650);
     --image-bg-color: var(--grey-30);
     --scrollbar-color: var(--grey-300);

@@ -33,11 +33,11 @@
 
     /* Reds */
     --color-darkest-red: #581507;
-    --color-dark-red: #a11f05;
-    --color-red: #db3121;
-    --color-red-orange: #f52a00;
-    --color-light-red: #f7e4e6;
-    --color-lightest-red: #fff5f4;
+    --red-dark: #a11f05;
+    --red: #db3121;
+    --red-orange: #f52a00;
+    --red-light: #f7e4e6;
+    --red-lightest: #fff5f4;
     --color-warning: #ef3c52;
 
     /* Yellows */
@@ -74,7 +74,7 @@
     --color-lightest-violet-blue: #f0f0ff;
 
     /* Oranges */
-    --color-red-orange: #eb5f5f;
+    --red-orange: #eb5f5f;
     --color-bright-orange: #ff6600;
     --color-orange: #faa217;
     --bg-light-orange: #fff3e5;
