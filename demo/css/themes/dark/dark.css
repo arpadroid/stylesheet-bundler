@@ -39,7 +39,7 @@
     --overlay-light: rgba(28, 28, 28, 0.5);
 
     --color-primary: #2a8cef;
-    --search-hilight: var(--color-yellow);
+    --search-hilight: var(--yellow);
     --color-error-bg: var(--grey-150);
     --color-error-outline: var(--red-light);
     --color-icon-active: var(--grey-650);

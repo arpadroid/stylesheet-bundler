@@ -41,28 +41,28 @@
     --color-warning: #ef3c52;
 
     /* Yellows */
-    --color-yellow: #f3ad2e;
+    --yellow: #f3ad2e;
     --search-hilight: #ffe18f;
     --color-light-yellow: #fff8ce;
     --color-lightest-yellow: #fffced;
 
     /* blues */
-    --color-blue-neon: #5e57ea;
-    --color-blue-neon-light: #8883e2;
-    --color-blue-neon-dark: #312e77;
-    --color-blue-neon-darkest: #252359;
-    --color-blue-navy-dark: #10234b;
-    --color-blue-navy: #204595;
-    --color-medium-blue: #2f58b8;
-    --color-blue: #0266c8;
-    --color-cyan: #007dc3;
-    --light-cyan: #00afef;
-    --color-light-blue: #edf6fe;
-    --color-lightest-blue: #f1faff;
+    --blue-neon: #5e57ea;
+    --blue-neon-light: #8883e2;
+    --blue-neon-dark: #312e77;
+    --blue-neon-darkest: #252359;
+    --blue-navy-dark: #10234b;
+    --blue-navy: #204595;
+    --blue-medium: #2f58b8;
+    --blue: #0266c8;
+    --cyan: #007dc3;
+    --cyan-light: #00afef;
+    --blue-light: #edf6fe;
+    --blue-lightest: #f1faff;
 
     /* Greens */
     --color-dark-green: #054711;
-    --color-green: #2a7d2a;
+    --green: #2a7d2a;
     --color-light-green: #d4ebce;
     --color-lightest-green: #f5f8f0;
 
@@ -76,12 +76,12 @@
     /* Oranges */
     --red-orange: #eb5f5f;
     --color-bright-orange: #ff6600;
-    --color-orange: #faa217;
+    --orange: #faa217;
     --bg-light-orange: #fff3e5;
 
     /* Purples */
-    --color-purple: #9d4098;
-    --color-light-purple: #f9e5ff;
+    --purple: #9d4098;
+    --purple-light: #f9e5ff;
     --color-light-pink: #fde3ff;
     --color-white: #ffffff;
 
@@ -91,9 +91,9 @@
     --label-color-light: #909090;
 
     /* Primary */
-    --color-primary: var(--color-blue);
-    --primary-hilight: var(--color-lightest-blue);
-    --primary-highlight-outline: var(--color-blue-navy);
+    --color-primary: var(--blue);
+    --primary-hilight: var(--blue-lightest);
+    --primary-highlight-outline: var(--blue-navy);
 
     /* Secondary */
     --color-secondary: #e89613;
