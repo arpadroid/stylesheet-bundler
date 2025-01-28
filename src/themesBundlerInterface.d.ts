@@ -41,4 +41,6 @@ export interface ThemesBundlerInterface {
      * @property {string} watchPaths - Paths to be monitored for changes in external theme files, if not specified the script will use the working directory by default.
      */
     watchPaths?: string[];
+    exportPath?: string;
+    slim?: boolean;
 }
