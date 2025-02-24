@@ -1,4 +1,11 @@
 {
-  "extends": "./node_modules/@arpadroid/module/tsconfig.json",
-  "include": ["src/**/*"]
+  "extends": "./node_modules/@arpadroid/module/src/tsconfig/nodenext/tsconfig.json",
+  "compilerOptions": {
+      "rootDir": "./src",
+      "outDir": "./.tmp/.types",
+      "jsx": "react",
+      "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules", "dist", "**/*.test.ts", "**/*.test.js", "./dist/@types"]
 }

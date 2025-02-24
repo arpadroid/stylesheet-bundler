@@ -4,3 +4,5 @@ node_modules/
 *.min.css
 *.scss
 *.less
+.tmp/
+dist/

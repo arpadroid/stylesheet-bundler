@@ -1,16 +1,16 @@
-import { ThemeBundlerInterface } from './themeBundlerInterface';
+import { ThemeBundlerConfigType } from '../themeBundler/themeBundler.types.js';
 
 /**
  * Options and configuration for the ThemesBundler.
  */
-export interface ThemesBundlerInterface {
+export interface ThemesBundlerConfigType {
     /**
-     * @property {ThemeBundlerInterface[]} themes - An array of ThemeBundlerInterface configurations to define your themes.
+     * @property {ThemeBundlerConfigType[]} themes - An array of ThemeBundlerConfigType configurations to define your themes.
      * Check the implementation in demo/css/bundle.js.
      * It is only required to define a path property for each of them.
      * E.g. themes: [{ path: '/../src/themes/default' }, { path: '/../src/themes/dark' }]
      */
-    themes?: ThemeBundlerInterface[];
+    themes?: ThemeBundlerConfigType[];
 
     /**
      * @property {string[]} patterns - A set of absolute glob file patterns to be used when looking for theme files in other directories.
@@ -42,5 +42,13 @@ export interface ThemesBundlerInterface {
      */
     watchPaths?: string[];
     exportPath?: string;
-    slim?: boolean;
 }
+
+export type WriteStylesReturnType = {
+    result?: any;
+    styles?: string;
+    targetFile?: string;
+    message?: string;
+};
+
+export type StyleUpdateCallbackType = (file: string, event: string) => void;

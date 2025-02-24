@@ -1,7 +1,4 @@
-/**
- * @interface ThemeBundlerInterface - The interface for the ThemesBundler configuration.
- */
-export interface ThemeBundlerInterface {
+export type ThemeBundlerConfigType = {
     /**
      * @property {string} path - The absolute path to the theme directory containing all stylesheets.
      * It is NOT required via the file config [themeName].config.json.
@@ -31,7 +28,7 @@ export interface ThemeBundlerInterface {
 
     /**
      * @property {string} commonThemeFile - A path to a common stylesheet that will be used as a base for the current theme.
-     * It is internally set by the ThemesBundler if we set a commonThemePath (refer to ThemesBundlerInterface).
+     * It is internally set by the ThemesBundler if we set a commonThemePath (refer to ThemesBundlerConfigType).
      */
     commonThemeFile?: string;
 
@@ -58,7 +55,7 @@ export interface ThemeBundlerInterface {
 
     /**
      * @property {string[]} patterns - A set of absolute glob file patterns to be used when looking for theme files in other directories.
-     * It is passed via the ThemesBundler config. Refer to ThemesBundlerInterface patterns property for more information.
+     * It is passed via the ThemesBundler config. Refer to ThemesBundlerConfigType patterns property for more information.
      */
     patterns?: string[];
 
@@ -66,4 +63,5 @@ export interface ThemeBundlerInterface {
      * @property {boolean} verbose - If set to true it logs the output of the compilation process.
      */
     verbose?: boolean;
-}
+    exportPath?: string;
+};

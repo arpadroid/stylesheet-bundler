@@ -1,31 +1,41 @@
 /* eslint-disable security/detect-non-literal-fs-filename */
 /**
- * @typedef {import('./themesBundlerInterface').ThemesBundlerInterface} ThemesBundlerInterface
- * @typedef {import('./themeBundlerInterface').ThemeBundlerInterface} ThemeBundlerInterface
+ * @typedef {import('./themesBundler.types.js').ThemesBundlerConfigType} ThemesBundlerConfigType
+ * @typedef {import('../themeBundler/themeBundler.types.js').ThemeBundlerConfigType} ThemeBundlerConfigType
+ * @typedef {import('../common.types.js').BundlerCommandArgsType} BundlerCommandArgsType
  */
-const PATH = require('path');
-const fs = require('fs');
-const ThemeBundler = require('./themeBundler');
-const WATCH = require('yargs').argv.watch;
+
+import PATH from 'path';
+import fs from 'fs';
+import { hideBin } from 'yargs/helpers';
+import yargs from 'yargs';
+import ThemeBundler from '../themeBundler/themeBundler.mjs';
+
+/** @type {BundlerCommandArgsType} */ // @ts-ignore
+const argv = yargs(hideBin(process.argv)).argv;
+const WATCH = argv?.watch;
 class ThemesBundler {
-    /** @type {ThemeBundlerInterface[]} themes */
+    /** @type {ThemeBundler[]} themes */
     themes = [];
 
-    /** @type {Record<string, ThemeBundlerInterface>} themesByName */
+    /** @type {Record<string, ThemeBundler>} themesByName */
     themesByName = {};
 
-    /** @type {ThemeBundler} commonTheme */
-    commonTheme;
+    /** @type {ThemeBundler} commonTheme */ // @ts-ignore
+    commonTheme = this.commonTheme;
 
-    /** @type {Promise<Response>[]} */
-    promises;
+    /** @type {Promise<boolean>[]} */ // @ts-ignore
+    promises = this.promises;
 
-    /** @type {Promise<Response>} */
-    promise;
+    /** @type {Promise<boolean[]>} */ // @ts-ignore
+    promise = this.promise;
+
+    /** @type {ThemesBundlerConfigType} */ // @ts-ignore
+    _config = this._config;
 
     /**
      * This class bundles and watches CSS/LESS/SCSS themes.
-     * @param {ThemesBundlerInterface} config
+     * @param {ThemesBundlerConfigType} config
      */
     constructor(config) {
         this.setConfig(config);
@@ -34,23 +44,23 @@ class ThemesBundler {
 
     /**
      * Sets the config for ThemeBundler.
-     * @param {ThemesBundlerInterface} config
+     * @param {ThemesBundlerConfigType} config
      */
     setConfig(config = {}) {
-        /** @type {ThemesBundlerInterface} */
+        /** @type {ThemesBundlerConfigType} */
         this._config = Object.assign(this.getDefaultConfig(), config);
     }
 
     /**
      * Returns the default config for ThemeBundler.
-     * @returns {ThemesBundlerInterface}
+     * @returns {ThemesBundlerConfigType}
      */
     getDefaultConfig() {
         return {
             themes: [],
             minify: false,
             patterns: [],
-            exportPath: '',
+            exportPath: ''
         };
     }
 
@@ -60,10 +70,10 @@ class ThemesBundler {
     _initializeThemes() {
         this.promises = [];
         this._initializeCommonTheme();
-        const themes = this._config.themes;
+        const themes = this._config?.themes;
         if (Array.isArray(themes)) {
             themes.forEach(themeConfig => {
-                if (fs.existsSync(themeConfig?.path)) {
+                if (themeConfig?.path && fs.existsSync(themeConfig?.path)) {
                     this._initializeThemeConfig(themeConfig);
                     const theme = new ThemeBundler(themeConfig);
                     this.promises.push(theme.promise);
@@ -74,7 +84,8 @@ class ThemesBundler {
                 }
             });
         }
-        this.promise = Promise.all(this.promises);
+        /** @type {Promise<Response[]>} */
+        this.promise = /** @type {Promise<boolean[]>} */ (Promise.all(this.promises));
     }
 
     /**
@@ -82,7 +93,7 @@ class ThemesBundler {
      */
     _initializeCommonTheme() {
         const { patterns, commonThemePath } = this._config;
-        if (fs.existsSync(commonThemePath)) {
+        if (commonThemePath && fs.existsSync(commonThemePath)) {
             this.commonTheme = new ThemeBundler({
                 path: commonThemePath,
                 patterns
@@ -92,12 +103,11 @@ class ThemesBundler {
 
     /**
      * Initializes the configuration of each ThemeBundler defined in the config.
-     * @param {ThemeBundlerInterface} config
+     * @param {ThemeBundlerConfigType} config
      */
     _initializeThemeConfig(config = {}) {
-        config.patterns = this._config.patterns ?? config.patterns;
-        config.exportPath = this._config.exportPath ?? config.exportPath;
-        config.slim = this._config.slim ?? config.slim;
+        config.patterns = this._config?.patterns ?? config.patterns;
+        config.exportPath = this._config?.exportPath ?? config.exportPath;
         if (this.commonTheme) {
             const themeName = this.commonTheme.getName();
             const path = this.commonTheme.getPath();
@@ -108,38 +118,34 @@ class ThemesBundler {
     /**
      * Initializes the Themes Bundler.
      * @param {boolean} watch
-     * @returns {Promise<Response[]>}
+     * @returns {Promise<boolean[]>}
      */
     async initialize(watch = WATCH) {
         await this.promise;
         this.cleanup();
         const rv = await this.bundle();
-        if (watch) {
-            this.watch();
-        }
+        watch && this.watch();
         return rv;
     }
 
     /**
      * Bundles all configured themes.
-     * @returns {Promise<Response[]>}
+     * @returns {Promise<boolean[]>}
      */
     async bundle() {
         this.promises = [];
         if (this.commonTheme) {
-            await this.commonTheme.bundle(this._config.minify);
+            await this.commonTheme.bundle(this._config?.minify);
         }
         return this.bundleThemes();
     }
 
     /**
      * Bundles all themes except the common theme.
-     * @returns {Promise<Response[]>}
+     * @returns {Promise<boolean[]>}
      */
     bundleThemes() {
-        const promises = [];
-        this.themes.forEach(theme => promises.push(theme.bundle(this._config.minify)));
-        return Promise.all(promises);
+        return Promise.all(this.themes.map(theme => theme.bundle(this._config?.minify)));
     }
 
     /**
@@ -163,4 +169,4 @@ class ThemesBundler {
     }
 }
 
-module.exports = ThemesBundler;
+export default ThemesBundler;

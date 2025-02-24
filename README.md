@@ -123,10 +123,10 @@
 > :information_source: &nbsp;It's good to avoid the use of <b>@import</b> in your CSS altogether because it creates HTTP requests, which can greatly affect performance and scalability creating a bottleneck during the loading phase. It is best to define your imports as shown above and all files will be concatenated into a single file at the root of your theme directory. Therefore any assets referenced from any stylesheet, no matter where this file might be in your application, will be relative to the theme directory. This helps simplify development.<br/>
 <p>
 <br/>
-    For all other documentation on the theme bundler configuration options please refer to the <b>ThemeBundlerInterface</b>
+    For all other documentation on the theme bundler configuration options please refer to the <b>ThemeBundlerConfigType</b>
     
 ```ts
-export interface ThemeBundlerInterface {
+export interface ThemeBundlerConfigType {
     /**
      * @property {string} path - The absolute path to the theme directory containing all stylesheets.
      * It is NOT required via the file config [themeName].config.json.
@@ -151,7 +151,7 @@ export interface ThemeBundlerInterface {
 
     /**
      * @property {string} commonThemeFile - A path to a common stylesheet that will be used as a base for the current theme.
-     * It is internally set by the ThemesBundler if we set a commonThemePath (refer to ThemesBundlerInterface).
+     * It is internally set by the ThemesBundler if we set a commonThemePath (refer to ThemesBundlerConfigType).
      */
     commonThemeFile?: string;
 
@@ -178,7 +178,7 @@ export interface ThemeBundlerInterface {
 
     /**
      * @property {string[]} patterns - A set of absolute glob file patterns to be used when looking for theme files in other directories.
-     * It is passed via the ThemesBundler config. Refer to ThemesBundlerInterface patterns property for more information.
+     * It is passed via the ThemesBundler config. Refer to ThemesBundlerConfigType patterns property for more information.
      */
     patterns?: string[];
 
@@ -255,17 +255,17 @@ bundler.promise.then(() => {
     - If you are running the script in development mode and edit a file that belongs to a theme, the theme will be re-bundled on save.
 
 <p>
-    For detailed information about the <b>ThemesBundler</b> configuration check out the <b>ThemesBundlerInterface</b>
+    For detailed information about the <b>ThemesBundler</b> configuration check out the <b>ThemesBundlerConfigType</b>
 
 ```ts
-export interface ThemesBundlerInterface {
+export interface ThemesBundlerConfigType {
     /**
-     * @property {ThemeBundlerInterface[]} themes - An array of ThemeBundlerInterface configurations to define your themes.
+     * @property {ThemeBundlerConfigType[]} themes - An array of ThemeBundlerConfigType configurations to define your themes.
      * Check the implementation in demo/css/bundle.js.
      * It is only required to define a path property for each of them.
      * E.g. themes: [{ path: '/../src/themes/default' }, { path: '/../src/themes/dark' }]
      */
-    themes?: ThemeBundlerInterface[];
+    themes?: ThemeBundlerConfigType[];
 
     /**
      * @property {string[]} patterns - A set of absolute glob file patterns to be used when looking for theme files in other directories.

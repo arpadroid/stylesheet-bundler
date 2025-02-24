@@ -3,7 +3,7 @@
  * The script will act based upon the --mode passed, which can be either `development` or `production`.
  * You can have a script in your package.json that runs this file with the `--mode` flag.
  * E.g. `node ./scripts/bundle.js --mode=production`.
- * @typedef {import('../../src/themeBundlerInterface').ThemeBundlerInterface} ThemeBundlerInterface
+ * @typedef {import('../../src/ThemeBundlerConfigType').ThemeBundlerConfigType} ThemeBundlerConfigType
  */
 const ThemesBundler = require('../../src/themesBundler');
 const argv = require('yargs').argv;
