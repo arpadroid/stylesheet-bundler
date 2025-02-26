@@ -3,8 +3,12 @@ const config = {
     buildStyles: false,
     buildJS: false,
     build18n: false,
-    watch: true,
-    buildDeps: false
+    watch: false,
+    buildDeps: false,
+    logo: `           ┓    • ┓      ┓   ┓        ┓      ┓┓    
+  ┏┓┏┓┏┓┏┓┏┫┏┓┏┓┓┏┫  ┏╋┓┏┃┏┓┏┣┓┏┓┏┓╋  ┣┓┓┏┏┓┏┫┃┏┓┏┓
+  ┗┻┛ ┣┛┗┻┗┻┛ ┗┛┗┗┻  ┛┗┗┫┗┗ ┛┛┗┗ ┗ ┗  ┗┛┗┻┛┗┗┻┗┗ ┛ 
+------┛-----------------┛-----------------------------`
 };
 
 export default config;
