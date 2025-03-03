@@ -492,16 +492,25 @@ class ThemeBundler {
         if (!Array.isArray(patterns)) {
             return;
         }
-        patterns.forEach(pattern => {
-            const path = pattern.replace('/**/*', '');
-            fs.watch(path, { recursive: true }, async (event, file) => {
-                const ext = file ? PATH.extname(file).slice(1) : '';
-                const subExt = file ? PATH.basename(file).split('.')[1] : '';
-                if (this.extension === ext && subExt === this.themeName) {
-                    bundle && (await this.bundle());
-                    typeof callback === 'function' && callback(file || '', event);
-                }
-            });
+        patterns.forEach(pattern => this.watchPattern(pattern, callback, bundle));
+    }
+
+    /**
+     * Watches a pattern for changes.
+     * @param {string} pattern
+     * @param {StyleUpdateCallbackType} [callback]
+     * @param {boolean} [bundle]
+     */
+    watchPattern(pattern, callback, bundle = true) {
+        const path = pattern.replace('/**/*', '');
+        if (!fs.existsSync(path)) return;
+        fs.watch(path, { recursive: true }, async (event, file) => {
+            const ext = file ? PATH.extname(file).slice(1) : '';
+            const subExt = file ? PATH.basename(file).split('.')[1] : '';
+            if (this.extension === ext && subExt === this.themeName) {
+                bundle && (await this.bundle());
+                typeof callback === 'function' && callback(file || '', event);
+            }
         });
     }
 
