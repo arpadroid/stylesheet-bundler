@@ -1,5 +1,5 @@
-export type BundlerCommandArgsType = {
-    watch: boolean;
-    mode: 'development' | 'production';
-    verbose: boolean;
+export type BundlerCommandArgsType = Record<string, any> & {
+    watch?: boolean;
+    mode?: 'development' | 'production';
+    verbose?: boolean;
 };

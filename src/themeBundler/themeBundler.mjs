@@ -14,34 +14,20 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { transform } from 'lightningcss';
 
-/** @type {BundlerCommandArgsType} */ // @ts-ignore
+/** @type {BundlerCommandArgsType} */
 const argv = yargs(hideBin(process.argv)).argv;
 const cwd = process.cwd();
 const MODE = argv.mode === 'production' ? 'production' : 'development';
 const VERBOSE = argv.verbose;
-// const sass = require('sass');
 
 class ThemeBundler {
-    /** @type {ThemeBundlerConfigType} _config */ // @ts-ignore
-    _config = this._config;
-    /** @type {string | undefined} path */ // @ts-ignore
-    path = this.path;
-
-    /** @type {string} themeName */ // @ts-ignore
-    themeName = this.themeName;
-
-    /** @type {'css' | 'less' | 'scss' | undefined} extension */ // @ts-ignore
-    extension = this.extension;
-
-    /** @type {Promise<boolean>} */
-    promise;
-
     /**
      * This class bundles and watches themes.
      * @param {ThemeBundlerConfigType} config
      */
     constructor(config) {
         this.setConfig(config);
+        /** @type {Promise<boolean>} */
         this.promise = this._initialize();
     }
 
@@ -82,10 +68,13 @@ class ThemeBundler {
     async _initialize() {
         const { baseTheme, path, extension } = this._config || {};
         this.setPath(path);
+        /** @type {string} themeName */
         this.themeName = this.path?.split(PATH.sep).pop() ?? '';
         this._fileConfig = await this._loadFileConfig();
-        Object.assign(this._config, this._fileConfig || {});
+        Object.assign(this._config || {}, this._fileConfig || {});
+        /** @type {'css' | 'less' | 'scss' | undefined} extension */
         this.extension = extension;
+
         if (baseTheme) {
             this.setBaseTheme(baseTheme);
         }
@@ -116,6 +105,7 @@ class ThemeBundler {
         if (typeof path !== 'string' || !fs.lstatSync(path).isDirectory()) {
             console.log(`ThemeBundler => Invalid path in theme config ${this.themeName}: "${path}"`);
         }
+        /** @type {string | undefined} path */
         this.path = path;
     }
 
@@ -135,7 +125,7 @@ class ThemeBundler {
      * @returns {string}
      */
     getName() {
-        return this.themeName;
+        return this.themeName || '';
     }
 
     /**
@@ -152,7 +142,7 @@ class ThemeBundler {
      * @returns {Promise<boolean>}
      */
     async bundle(minify = false) {
-        const { verbose } = this._config;
+        const { verbose } = this._config || {};
         if (this.timeout) {
             // DEBOUNCING
             verbose && console.log('ThemeBundler =>', 'Debouncing theme bundle: ', this.themeName);
@@ -210,7 +200,7 @@ class ThemeBundler {
      * @returns {Promise<boolean>}
      */
     async exportBundle() {
-        const exportPath = this._config.exportPath;
+        const exportPath = this._config?.exportPath;
         if (!exportPath) return false;
         const exportDir = PATH.normalize(`${exportPath}/${this.themeName}`);
         if (!fs.existsSync(exportDir)) {
@@ -300,7 +290,7 @@ class ThemeBundler {
     getFiles() {
         const commonThemeFile = this.getCommonThemeFile();
         const includes = this.getIncludes();
-        const patternFiles = this.getPatternFiles(); // @ts-ignore
+        const patternFiles = this.getPatternFiles();
         return [commonThemeFile, ...includes, ...patternFiles]
             .filter(file => typeof file === 'string' && fs.existsSync(file))
             .filter(item => typeof item !== 'undefined');
@@ -314,7 +304,7 @@ class ThemeBundler {
         if (this.getName() === 'common') {
             return undefined;
         }
-        const file = this._config.commonThemeFile;
+        const file = this._config?.commonThemeFile;
         if (file && fs.existsSync(file) && !fs.lstatSync(file).isFile()) {
             console.log(`ThemeBundler => common theme file does not exist ${file}.`);
             return undefined;
@@ -339,12 +329,12 @@ class ThemeBundler {
      */
     getCSS(file) {
         let css = '';
-        if (file !== this._config.commonThemeFile && file.endsWith(`.bundled.${this.extension}`)) {
+        if (file !== this._config?.commonThemeFile && file.endsWith(`.bundled.${this.extension}`)) {
             return css;
         }
         const fileContent = fs.readFileSync(file, 'utf8');
         if (!fileContent || !fileContent.length) {
-            if (this._config.verbose) {
+            if (this._config?.verbose) {
                 console.log('no CSS found in file:' + file);
             }
             return;

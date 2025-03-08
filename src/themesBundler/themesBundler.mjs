@@ -11,7 +11,7 @@ import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs';
 import ThemeBundler from '../themeBundler/themeBundler.mjs';
 
-/** @type {BundlerCommandArgsType} */ // @ts-ignore
+/** @type {BundlerCommandArgsType} */
 const argv = yargs(hideBin(process.argv)).argv;
 const WATCH = argv?.watch;
 class ThemesBundler {
@@ -20,18 +20,6 @@ class ThemesBundler {
 
     /** @type {Record<string, ThemeBundler>} themesByName */
     themesByName = {};
-
-    /** @type {ThemeBundler} commonTheme */ // @ts-ignore
-    commonTheme = this.commonTheme;
-
-    /** @type {Promise<boolean>[]} */ // @ts-ignore
-    promises = this.promises;
-
-    /** @type {Promise<boolean[]>} */ // @ts-ignore
-    promise = this.promise;
-
-    /** @type {ThemesBundlerConfigType} */ // @ts-ignore
-    _config = this._config;
 
     /**
      * This class bundles and watches CSS/LESS/SCSS themes.
@@ -68,6 +56,7 @@ class ThemesBundler {
      * Instantiates ThemeBundler for each theme defined in the config.
      */
     _initializeThemes() {
+        /** @type {Promise<boolean>[]} */
         this.promises = [];
         this._initializeCommonTheme();
         const themes = this._config?.themes;
@@ -76,7 +65,7 @@ class ThemesBundler {
                 if (themeConfig?.path && fs.existsSync(themeConfig?.path)) {
                     this._initializeThemeConfig(themeConfig);
                     const theme = new ThemeBundler(themeConfig);
-                    this.promises.push(theme.promise);
+                    this.promises?.push(theme.promise);
                     this.themesByName[theme.getName()] = theme;
                     this.themes.push(theme);
                 } else {
@@ -84,15 +73,15 @@ class ThemesBundler {
                 }
             });
         }
-        /** @type {Promise<Response[]>} */
-        this.promise = /** @type {Promise<boolean[]>} */ (Promise.all(this.promises));
+        /** @type {Promise<boolean[]>} */
+        this.promise = Promise.all(this.promises);
     }
 
     /**
      * Instantiates ThemeBundler for the common theme defined through commonThemeFile in the config.
      */
     _initializeCommonTheme() {
-        const { patterns, commonThemePath } = this._config;
+        const { patterns, commonThemePath } = this._config || {};
         if (commonThemePath && fs.existsSync(commonThemePath)) {
             this.commonTheme = new ThemeBundler({
                 path: commonThemePath,
@@ -117,7 +106,7 @@ class ThemesBundler {
 
     /**
      * Initializes the Themes Bundler.
-     * @param {boolean} watch
+     * @param {boolean | undefined} watch
      * @returns {Promise<boolean[]>}
      */
     async initialize(watch = WATCH) {
